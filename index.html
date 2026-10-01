@@ -90,7 +90,7 @@
         }
         .top-nav-right {
             display: flex;
-            gap: 10px;
+            gap: 8px;
             margin-left: auto;
         }
         .nav-btn {
@@ -99,7 +99,7 @@
             color: #f39c12;
             padding: 8px 12px;
             border-radius: 6px;
-            font-size: 13px;
+            font-size: 12px;
             cursor: pointer;
             font-weight: bold;
         }
@@ -249,7 +249,7 @@
         }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 
-        /* Learn More Text Container */
+        /* Text Container */
         .text-container {
             text-align: left;
             max-width: 500px;
@@ -284,12 +284,24 @@
     <div id="page-signup" class="page">
         <h1>APEXPAY WALLET</h1>
         <div class="dollar-symbol" style="font-size: 60px;">💲</div>
+        <h3>Create Account</h3>
         <input type="tel" id="reg-phone" placeholder="Phone number (11 digits)" maxlength="11">
         <input type="text" id="reg-name" placeholder="Account name">
         <input type="tel" id="reg-acct-num" placeholder="Account number (10 digits)" maxlength="10">
         
         <button class="btn" onclick="registerUser()">START MINING</button>
-        <div class="link" onclick="alert('Sign in feature coming soon!')">Sign in here if you already have an account</div>
+        <div class="link" onclick="navigate('page-signin')">Already have an account? Sign in here</div>
+    </div>
+
+    <!-- 2B. SIGN IN PAGE -->
+    <div id="page-signin" class="page">
+        <h1>APEXPAY WALLET</h1>
+        <div class="dollar-symbol" style="font-size: 60px;">💲</div>
+        <h3>Sign In</h3>
+        <input type="tel" id="login-phone" placeholder="Input your 11 digit phone number" maxlength="11">
+        
+        <button class="btn" onclick="loginUser()">SIGN IN</button>
+        <div class="link" onclick="navigate('page-signup')">Don't have an account? Sign up here</div>
     </div>
 
     <!-- 3. DASHBOARD -->
@@ -299,6 +311,7 @@
             <div class="top-nav-right">
                 <button id="admin-nav-btn" class="nav-btn hidden" onclick="navigate('page-admin')">⚙️ Admin</button>
                 <button class="nav-btn" onclick="openHistoryModal()">📜 History</button>
+                <button class="nav-btn" style="color: #e74c3c;" onclick="logoutUser()">🚪 Logout</button>
             </div>
         </div>
         
@@ -364,7 +377,7 @@
         </div>
     </div>
 
-    <!-- CUSTOM WRONG CODE ERROR MODAL (Big Red X) -->
+    <!-- CUSTOM WRONG CODE ERROR MODAL -->
     <div id="modal-wrong-code" class="modal hidden">
         <div class="modal-content">
             <button class="error-x-btn" onclick="document.getElementById('modal-wrong-code').classList.add('hidden')">❌</button>
@@ -473,7 +486,7 @@
         <button class="btn btn-secondary" onclick="navigate('page-pin')">Back</button>
     </div>
 
-    <!-- 8. BUY CODE PAGE 2 (PAYMENT) -->
+        <!-- 8. BUY CODE PAGE 2 -->
     <div id="page-buy-code-2" class="page">
         <h2>Make Payment</h2>
         <p>Please transfer exactly <strong style="color: #f39c12;">₦<span id="display-code-price2">6,250</span></strong> to the account below:</p>
@@ -584,7 +597,7 @@
 
 
     <script>
-        // Global State Variable
+        // Global User DB Simulation
         let currentUser = {
             phone: '',
             name: '',
@@ -602,24 +615,28 @@
             adminBank: 'Opay',
             adminName: 'ApexPay Business Account',
             adminAcct: '8012345678',
-            validCode: null // Store valid single-use code
+            validCode: null
         };
 
         let currentPin = "";
-        let toastInterval = null;
 
-        // On Page Load Initialization
+        // On Page Load
         window.onload = () => {
-            if(localStorage.getItem('apex_user')) {
-                currentUser = JSON.parse(localStorage.getItem('apex_user'));
-                systemSettings = JSON.parse(localStorage.getItem('apex_settings')) || systemSettings;
+            const savedSettings = localStorage.getItem('apex_settings');
+            if (savedSettings) systemSettings = JSON.parse(savedSettings);
+
+            const savedUser = localStorage.getItem('apex_user');
+            if (savedUser) {
+                currentUser = JSON.parse(savedUser);
                 updateDashboardUI();
                 navigate('page-dashboard');
+            } else {
+                navigate('page-home');
             }
             startLiveToasts();
         };
 
-        // Navigation Controller
+        // Page Navigation
         function navigate(pageId) {
             document.querySelectorAll('.page').forEach(page => page.classList.remove('active-page'));
             document.getElementById(pageId).classList.add('active-page');
@@ -632,8 +649,16 @@
             const name = document.getElementById('reg-name').value.trim();
             const acct = document.getElementById('reg-acct-num').value.trim();
 
-            if(phone.length !== 11 || acct.length !== 10 || name.length < 2) {
-                alert("Please enter valid details: Phone must be 11 digits, Account number must be 10 digits.");
+            if (phone.length !== 11) {
+                alert("Please enter a valid 11-digit phone number.");
+                return;
+            }
+            if (name.length < 2) {
+                alert("Please enter a valid account name.");
+                return;
+            }
+            if (acct.length !== 10) {
+                alert("Please enter a valid 10-digit account number.");
                 return;
             }
 
@@ -642,8 +667,8 @@
             currentUser.acctNum = acct;
             currentUser.balance = 0;
             
-            // First user automatically becomes Admin
-            if(!localStorage.getItem('apex_has_admin')) {
+            // First user becomes Admin
+            if (!localStorage.getItem('apex_has_admin')) {
                 currentUser.isAdmin = true;
                 localStorage.setItem('apex_has_admin', 'true');
             }
@@ -651,6 +676,42 @@
             saveUser();
             updateDashboardUI();
             navigate('page-dashboard');
+        }
+
+        // Login Logic
+        function loginUser() {
+            const phone = document.getElementById('login-phone').value.trim();
+            if (phone.length !== 11) {
+                alert("Please enter your 11-digit phone number.");
+                return;
+            }
+
+            const savedUser = localStorage.getItem('apex_user');
+            if (savedUser) {
+                const parsedUser = JSON.parse(savedUser);
+                if (parsedUser.phone === phone) {
+                    currentUser = parsedUser;
+                    updateDashboardUI();
+                    navigate('page-dashboard');
+                    return;
+                }
+            }
+            
+            // If new phone entered via sign-in
+            currentUser.phone = phone;
+            currentUser.name = "User " + phone.substring(7);
+            currentUser.acctNum = "00" + phone.substring(3);
+            currentUser.balance = 0;
+            saveUser();
+            updateDashboardUI();
+            navigate('page-dashboard');
+        }
+
+        function logoutUser() {
+            if (confirm("Are you sure you want to logout?")) {
+                localStorage.removeItem('apex_user');
+                navigate('page-home');
+            }
         }
 
         function saveUser() {
@@ -663,18 +724,15 @@
             document.getElementById('dash-name').innerText = currentUser.name;
             document.getElementById('dash-acct').innerText = currentUser.acctNum;
             
-            // Show Admin Button if user is Admin
             if (currentUser.isAdmin) {
                 document.getElementById('admin-nav-btn').classList.remove('hidden');
             } else {
                 document.getElementById('admin-nav-btn').classList.add('hidden');
             }
 
-            // Autofill Withdrawal Fields
             document.getElementById('with-name').value = currentUser.name;
             document.getElementById('with-acct-num').value = currentUser.acctNum;
             
-            // System Settings UI Updates
             const formattedPrice = Number(systemSettings.codePrice).toLocaleString();
             document.getElementById('display-code-price').innerText = formattedPrice;
             document.getElementById('display-code-price2').innerText = formattedPrice;
@@ -682,7 +740,6 @@
             document.getElementById('admin-name-display').innerText = systemSettings.adminName;
             document.getElementById('admin-acct-display').innerText = systemSettings.adminAcct;
 
-            // Transaction History Data
             document.getElementById('hist-mined').innerText = currentUser.totalMined.toLocaleString('en-US', {minimumFractionDigits: 2});
             document.getElementById('hist-withdrawn').innerText = currentUser.totalWithdrawn.toLocaleString('en-US', {minimumFractionDigits: 2});
             
@@ -736,12 +793,10 @@
                 document.getElementById('countdown-timer').innerText = count;
                 if (count <= 0) {
                     clearInterval(timer);
-                    // Show Green Check & Throw Flowers
                     document.getElementById('mining-spinner-box').classList.add('hidden');
                     document.getElementById('mining-success-box').classList.remove('hidden');
                     triggerFlowerAnimation();
 
-                    // Credit user
                     currentUser.balance += 96000;
                     currentUser.totalMined += 96000;
                     currentUser.hasMined = true;
@@ -773,12 +828,10 @@
             alert("To upgrade your miner and mine more, please contact the Admin.");
         }
 
-        // History Modal
         function openHistoryModal() {
             document.getElementById('modal-history').classList.remove('hidden');
         }
 
-        // Withdrawal Input Validation
         function validateWithdrawalForm() {
             const amountInput = parseFloat(document.getElementById('with-amount').value);
             const btn = document.getElementById('btn-proceed-withdraw');
@@ -796,7 +849,7 @@
             }
         }
 
-        // PIN Keypad Logic
+                // Keypad Logic
         function pressKey(key) {
             if (key === 'C') {
                 currentPin = "";
@@ -815,7 +868,6 @@
                 return;
             }
 
-            // Check if valid code matches assigned system code or default initial code
             const validCode = systemSettings.validCode || "123456";
 
             if (currentPin === validCode) {
@@ -824,7 +876,6 @@
                 currentUser.totalWithdrawn += withdrawAmt;
                 currentUser.history.unshift(`Withdrew -₦${withdrawAmt.toLocaleString()} on ${new Date().toLocaleTimeString()}`);
                 
-                // Expire code after single use
                 systemSettings.validCode = null; 
 
                 saveUser();
@@ -834,13 +885,12 @@
                 pressKey('');
                 navigate('page-dashboard');
             } else {
-                // Show Custom Red X Modal
                 document.getElementById('modal-wrong-code').classList.remove('hidden');
                 currentPin = "";
                 pressKey('');
             }
         }
-                // Buy Code Step 1 Validation
+
         function validateBuyCodeStep1() {
             const name = document.getElementById('sender-name').value.trim();
             const acct = document.getElementById('sender-acct').value.trim();
@@ -854,14 +904,12 @@
             }
         }
 
-        // Copy Text Function
         function copyText(elementId) {
             const text = document.getElementById(elementId).innerText;
             navigator.clipboard.writeText(text);
             alert("Copied: " + text);
         }
 
-        // Receipt Upload Validation
         function checkFile() {
             const fileInput = document.getElementById('receipt-upload');
             const btnPaid = document.getElementById('btn-paid');
@@ -874,7 +922,6 @@
             navigate('page-dashboard');
         }
 
-        // Admin Actions
         function saveAdminSettings() {
             systemSettings.codePrice = document.getElementById('set-code-price').value;
             systemSettings.adminBank = document.getElementById('set-admin-bank').value;
@@ -897,7 +944,6 @@
         }
 
         function approvePayment() {
-            // Generate a random 6-digit one-time code
             const generatedCode = Math.floor(100000 + Math.random() * 900000).toString();
             systemSettings.validCode = generatedCode;
             localStorage.removeItem('pending_payment');
