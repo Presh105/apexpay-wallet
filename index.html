@@ -15,296 +15,88 @@
             padding: 0;
             text-align: center;
         }
-        .page {
-            display: none;
-            padding: 20px;
-            padding-bottom: 90px;
-            min-height: 100vh;
-        }
+        .page { display: none; padding: 20px; padding-bottom: 90px; min-height: 100vh; }
         .active-page { display: block; }
         h1, h2, h3 { color: #f39c12; margin-bottom: 10px; }
         p { color: #cbd5e1; line-height: 1.5; }
         
-        .dollar-symbol {
-            font-size: 100px;
-            margin: 15px 0;
-            text-shadow: 0 0 20px rgba(46, 204, 113, 0.5);
-        }
+        .dollar-symbol { font-size: 100px; margin: 15px 0; text-shadow: 0 0 20px rgba(46, 204, 113, 0.5); }
         
         /* Inputs & Buttons */
         input, select {
-            display: block;
-            width: 90%;
-            max-width: 400px;
-            margin: 15px auto;
-            padding: 15px;
-            border-radius: 8px;
-            border: 1px solid #334155;
-            background: #1e293b;
-            color: white;
-            font-size: 16px;
+            display: block; width: 90%; max-width: 400px; margin: 15px auto; padding: 15px;
+            border-radius: 8px; border: 1px solid #334155; background: #1e293b; color: white; font-size: 16px;
         }
-        input:focus, select:focus {
-            outline: none;
-            border-color: #f39c12;
-        }
+        input:focus, select:focus { outline: none; border-color: #f39c12; }
         .btn {
-            background: #f39c12;
-            color: #0d1117;
-            border: none;
-            padding: 15px 30px;
-            font-size: 16px;
-            font-weight: bold;
-            border-radius: 8px;
-            cursor: pointer;
-            width: 90%;
-            max-width: 400px;
-            margin: 10px auto;
-            text-transform: uppercase;
-            transition: opacity 0.2s;
+            background: #f39c12; color: #0d1117; border: none; padding: 15px 30px; font-size: 16px;
+            font-weight: bold; border-radius: 8px; cursor: pointer; width: 90%; max-width: 400px;
+            margin: 10px auto; text-transform: uppercase; transition: opacity 0.2s;
         }
-        .btn:disabled {
-            background: #475569 !important;
-            color: #94a3b8 !important;
-            cursor: not-allowed;
-            opacity: 0.6;
-        }
+        .btn:disabled { background: #475569 !important; color: #94a3b8 !important; cursor: not-allowed; opacity: 0.6; }
         .btn-secondary { background: #334155; color: #fff; }
         .btn-danger { background: #e74c3c; color: #fff; }
-        .link {
-            color: #f39c12;
-            cursor: pointer;
-            text-decoration: underline;
-            margin-top: 10px;
-            display: inline-block;
-        }
+        .link { color: #f39c12; cursor: pointer; text-decoration: underline; margin-top: 10px; display: inline-block; }
 
-        /* Top Bar Nav */
-        .top-nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 15px 20px;
-            background: #161b22;
-            border-bottom: 1px solid #30363d;
-        }
-        .top-nav-right {
-            display: flex;
-            gap: 8px;
-            margin-left: auto;
-        }
-        .nav-btn {
-            background: #21262d;
-            border: 1px solid #30363d;
-            color: #f39c12;
-            padding: 8px 12px;
-            border-radius: 6px;
-            font-size: 12px;
-            cursor: pointer;
-            font-weight: bold;
-        }
-
-        /* Balance Card */
-        .balance-card {
-            background: #161b22;
-            padding: 25px;
-            border-radius: 12px;
-            margin: 20px auto;
-            max-width: 400px;
-            border: 1px solid #30363d;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-        }
-        .balance-amount {
-            font-size: 38px;
-            font-weight: bold;
-            color: #2ecc71;
-            margin-top: 10px;
-        }
-
-        /* Bottom Fixed Nav */
-        .bottom-nav {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            background: #161b22;
-            display: flex;
-            justify-content: space-around;
-            padding: 12px 0;
-            border-top: 1px solid #30363d;
-            z-index: 99;
-        }
-        .nav-item {
-            background: none;
-            border: none;
-            color: white;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            font-size: 11px;
-            cursor: pointer;
-        }
+        /* Navigations */
+        .top-nav { display: flex; justify-content: space-between; align-items: center; padding: 15px 20px; background: #161b22; border-bottom: 1px solid #30363d; }
+        .top-nav-right { display: flex; gap: 8px; margin-left: auto; }
+        .nav-btn { background: #21262d; border: 1px solid #30363d; color: #f39c12; padding: 8px 12px; border-radius: 6px; font-size: 12px; cursor: pointer; font-weight: bold; }
+        
+        .bottom-nav { position: fixed; bottom: 0; left: 0; width: 100%; background: #161b22; display: flex; justify-content: space-around; padding: 12px 0; border-top: 1px solid #30363d; z-index: 99; }
+        .nav-item { background: none; border: none; color: white; display: flex; flex-direction: column; align-items: center; font-size: 11px; cursor: pointer; }
         .nav-item span { font-size: 22px; margin-bottom: 4px; }
 
-        /* Modals & Overlays */
-        .modal {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.85);
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            z-index: 1000;
-            padding: 20px;
-        }
-        .modal-content {
-            background: #161b22;
-            padding: 25px;
-            border-radius: 12px;
-            border: 1px solid #30363d;
-            max-width: 400px;
-            width: 100%;
-        }
+        /* Dashboard Cards & Modals */
+        .balance-card { background: #161b22; padding: 25px; border-radius: 12px; margin: 20px auto; max-width: 400px; border: 1px solid #30363d; box-shadow: 0 4px 15px rgba(0,0,0,0.3); }
+        .balance-amount { font-size: 38px; font-weight: bold; color: #2ecc71; margin-top: 10px; }
+        .modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); display: flex; justify-content: center; align-items: center; z-index: 1000; padding: 20px; }
+        .modal-content { background: #161b22; padding: 25px; border-radius: 12px; border: 1px solid #30363d; max-width: 400px; width: 100%; }
         .hidden { display: none !important; }
+        .error-x-btn { font-size: 70px; color: #e74c3c; background: none; border: none; cursor: pointer; margin-bottom: 15px; }
 
-        /* Error X Button Modal */
-        .error-x-btn {
-            font-size: 70px;
-            color: #e74c3c;
-            background: none;
-            border: none;
-            cursor: pointer;
-            margin-bottom: 15px;
-        }
-
-        /* Live Notifications Toast */
-        .toast-notification {
-            position: fixed;
-            top: 15px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: rgba(30, 41, 59, 0.95);
-            border: 1px solid #f39c12;
-            color: #ffffff;
-            padding: 10px 18px;
-            border-radius: 25px;
-            font-size: 13px;
-            z-index: 999;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.5);
-            pointer-events: none;
-            transition: opacity 0.5s ease-in-out;
-        }
-
-        /* Keypad Styles */
-        .keypad {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 12px;
-            max-width: 300px;
-            margin: 20px auto;
-        }
-        .key {
-            background: #1e293b;
-            padding: 18px;
-            font-size: 22px;
-            border-radius: 10px;
-            cursor: pointer;
-            user-select: none;
-            border: 1px solid #334155;
-        }
+        /* Toast, Keypad, Animations */
+        .toast-notification { position: fixed; top: 15px; left: 50%; transform: translateX(-50%); background: rgba(30, 41, 59, 0.95); border: 1px solid #f39c12; color: #ffffff; padding: 10px 18px; border-radius: 25px; font-size: 13px; z-index: 999; transition: opacity 0.5s ease-in-out; }
+        .keypad { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; max-width: 300px; margin: 20px auto; }
+        .key { background: #1e293b; padding: 18px; font-size: 22px; border-radius: 10px; cursor: pointer; user-select: none; border: 1px solid #334155; }
         .key:active { background: #334155; }
-        .pin-display {
-            font-size: 32px;
-            letter-spacing: 12px;
-            margin: 15px;
-            height: 40px;
-            color: #f39c12;
-        }
-
-        /* Flower / Confetti Animation */
-        .flower {
-            position: fixed;
-            top: -10%;
-            font-size: 28px;
-            animation: fall 3s linear forwards;
-            z-index: 1001;
-        }
-        @keyframes fall {
-            to {
-                transform: translateY(110vh) rotate(360deg);
-                opacity: 0;
-            }
-        }
-
-        /* Spinner */
-        .spinner {
-            border: 6px solid #1e293b;
-            border-top: 6px solid #f39c12;
-            border-radius: 50%;
-            width: 60px;
-            height: 60px;
-            animation: spin 1s linear infinite;
-            margin: 20px auto;
-        }
+        .pin-display { font-size: 32px; letter-spacing: 12px; margin: 15px; height: 40px; color: #f39c12; }
+        .flower { position: fixed; top: -10%; font-size: 28px; animation: fall 3s linear forwards; z-index: 1001; }
+        @keyframes fall { to { transform: translateY(110vh) rotate(360deg); opacity: 0; } }
+        .spinner { border: 6px solid #1e293b; border-top: 6px solid #f39c12; border-radius: 50%; width: 60px; height: 60px; animation: spin 1s linear infinite; margin: 20px auto; }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-
-        /* Text Container */
-        .text-container {
-            text-align: left;
-            max-width: 500px;
-            margin: 0 auto;
-            background: #161b22;
-            padding: 20px;
-            border-radius: 10px;
-            border: 1px solid #30363d;
-        }
-        .text-container h4 { color: #2ecc71; margin-top: 15px; margin-bottom: 5px; }
+        .text-container { text-align: left; max-width: 500px; margin: 0 auto; background: #161b22; padding: 20px; border-radius: 10px; border: 1px solid #30363d; }
     </style>
 </head>
 <body>
+    <div id="toast" class="toast-notification hidden"><span id="toast-text"></span></div>
 
-    <!-- LIVE TOAST NOTIFICATION -->
-    <div id="toast" class="toast-notification hidden">
-        <span id="toast-text">Someone just withdrew ₦96,000</span>
-    </div>
-
-    <!-- 1. HOMEPAGE -->
+    <!-- PAGE 1: HOME -->
     <div id="page-home" class="page active-page">
-        <h1>APEXPAY WALLET</h1>
-        <div class="dollar-symbol">💲</div>
-        <h2>Welcome to APEXPAY Wallet</h2>
-        <p style="max-width: 350px; margin: 0 auto 25px auto;">
-            Securely manage your digital assets and grow your wealth with ease. Fast, simple, and secure — everything you need in one wallet.
-        </p>
+        <h1>APEXPAY WALLET</h1><div class="dollar-symbol">💲</div><h2>Welcome to APEXPAY</h2>
+        <p>Securely manage your digital assets and grow your wealth with ease.</p>
         <button class="btn" onclick="navigate('page-signup')">GET STARTED</button>
     </div>
 
-    <!-- 2. SIGNUP PAGE -->
+    <!-- PAGE 2: SIGN UP -->
     <div id="page-signup" class="page">
-        <h1>APEXPAY WALLET</h1>
-        <div class="dollar-symbol" style="font-size: 60px;">💲</div>
-        <h3>Create Account</h3>
+        <h1>APEXPAY WALLET</h1><div class="dollar-symbol" style="font-size: 60px;">💲</div><h3>Create Account</h3>
         <input type="tel" id="reg-phone" placeholder="Phone number (11 digits)" maxlength="11">
         <input type="text" id="reg-name" placeholder="Account name">
         <input type="tel" id="reg-acct-num" placeholder="Account number (10 digits)" maxlength="10">
-        
         <button class="btn" onclick="registerUser()">START MINING</button>
         <div class="link" onclick="navigate('page-signin')">Already have an account? Sign in here</div>
     </div>
 
-    <!-- 2B. SIGN IN PAGE -->
+    <!-- PAGE 3: SIGN IN -->
     <div id="page-signin" class="page">
-        <h1>APEXPAY WALLET</h1>
-        <div class="dollar-symbol" style="font-size: 60px;">💲</div>
-        <h3>Sign In</h3>
+        <h1>APEXPAY WALLET</h1><div class="dollar-symbol" style="font-size: 60px;">💲</div><h3>Sign In</h3>
         <input type="tel" id="login-phone" placeholder="Input your 11 digit phone number" maxlength="11">
-        
         <button class="btn" onclick="loginUser()">SIGN IN</button>
         <div class="link" onclick="navigate('page-signup')">Don't have an account? Sign up here</div>
     </div>
 
-    <!-- 3. DASHBOARD -->
+    <!-- PAGE 4: DASHBOARD -->
     <div id="page-dashboard" class="page">
         <div class="top-nav">
             <span style="font-weight: bold; color: #2ecc71;">⚡ APEXPAY</span>
@@ -314,406 +106,150 @@
                 <button class="nav-btn" style="color: #e74c3c;" onclick="logoutUser()">🚪 Logout</button>
             </div>
         </div>
-        
         <div class="balance-card">
             <h3 style="margin: 0;">Mining Balance</h3>
             <div class="balance-amount">₦<span id="dash-balance">0.00</span></div>
         </div>
-
         <div style="text-align: left; max-width: 400px; margin: 0 auto; background: #161b22; padding: 18px; border-radius: 10px; border: 1px solid #30363d;">
-            <p style="margin: 5px 0;"><strong>Name:</strong> <span id="dash-name">User</span></p>
-            <p style="margin: 5px 0;"><strong>Account:</strong> <span id="dash-acct">0000000000</span></p>
-            <p style="margin: 5px 0;"><strong>Current Miner:</strong> Basic Level</p>
+            <p><strong>Name:</strong> <span id="dash-name">User</span></p>
+            <p><strong>Account:</strong> <span id="dash-acct">0000000000</span></p>
         </div>
-
         <div class="bottom-nav">
-            <button class="nav-item" onclick="navigate('page-more-mines')"><span>⛏️</span> ACCESS MORE MINES</button>
+            <button class="nav-item" onclick="navigate('page-more-mines')"><span>⛏️</span> MORE MINES</button>
             <button class="nav-item" onclick="startMiningProcess()"><span>👛</span> MINE</button>
             <button class="nav-item" onclick="navigate('page-withdraw')"><span>🤝</span> WITHDRAW</button>
-            <button class="nav-item" onclick="navigate('page-learn-more')"><span>ℹ️</span> Learn More</button>
+            <button class="nav-item" onclick="navigate('page-learn-more')"><span>ℹ️</span> INFO</button>
         </div>
     </div>
 
-    <!-- MINING ANIMATION MODAL -->
+    <!-- MODALS & OTHER PAGES -->
     <div id="modal-mining" class="modal hidden">
         <div class="modal-content">
-            <div id="mining-spinner-box">
-                <h2>Mining in Progress... ⛏️</h2>
-                <div class="spinner"></div>
-                <h1 id="countdown-timer" style="font-size: 50px; color: #f39c12;">5</h1>
-            </div>
-            <div id="mining-success-box" class="hidden">
-                <div style="font-size: 80px; color: #2ecc71;">✔️</div>
-                <h2 style="color: #2ecc71;">Mining Successful!</h2>
-                <p>₦96,000 has been added to your wallet balance.</p>
-                <button class="btn" onclick="closeMiningModal()">CONTINUE</button>
-            </div>
+            <div id="mining-spinner-box"><h2>Mining... ⛏️</h2><div class="spinner"></div><h1 id="countdown-timer">5</h1></div>
+            <div id="mining-success-box" class="hidden"><div style="font-size: 80px; color: #2ecc71;">✔️</div><h2 style="color: #2ecc71;">Success!</h2><p>₦96,000 added.</p><button class="btn" onclick="closeMiningModal()">CONTINUE</button></div>
         </div>
     </div>
 
-    <!-- MINING LIMIT REACHED MODAL -->
     <div id="modal-limit" class="modal hidden">
-        <div class="modal-content">
-            <h2 style="color: #e74c3c;">MINING LIMIT REACHED</h2>
-            <p>You have reached your free mining capacity.</p>
-            <button class="btn" onclick="showAdminContactAlert()">Upgrade to mine more</button>
-            <button class="btn btn-secondary" onclick="navigate('page-withdraw'); document.getElementById('modal-limit').classList.add('hidden');">Withdraw your 96,000</button>
-        </div>
+        <div class="modal-content"><h2 style="color: #e74c3c;">LIMIT REACHED</h2><p>You reached your free mining capacity.</p>
+        <button class="btn" onclick="showAdminContactAlert()">Upgrade</button><button class="btn btn-secondary" onclick="navigate('page-withdraw'); document.getElementById('modal-limit').classList.add('hidden');">Withdraw</button></div>
     </div>
 
-    <!-- TRANSACTION HISTORY MODAL -->
     <div id="modal-history" class="modal hidden">
-        <div class="modal-content">
-            <h2>Transaction History</h2>
-            <div style="text-align: left; margin: 20px 0;">
-                <p><strong>Total Mined:</strong> ₦<span id="hist-mined">0.00</span></p>
-                <p><strong>Total Withdrawn:</strong> ₦<span id="hist-withdrawn">0.00</span></p>
-                <hr style="border-color: #30363d; margin: 15px 0;">
-                <div id="history-logs" style="max-height: 150px; overflow-y: auto; font-size: 13px;">
-                    <p style="color: #94a3b8;">No transactions yet.</p>
-                </div>
-            </div>
-            <button class="btn btn-secondary" onclick="document.getElementById('modal-history').classList.add('hidden')">CLOSE</button>
-        </div>
+        <div class="modal-content"><h2>History</h2><p>Total Mined: ₦<span id="hist-mined">0</span></p><p>Total Withdrawn: ₦<span id="hist-withdrawn">0</span></p>
+        <div id="history-logs" style="max-height: 150px; overflow-y: auto; text-align:left;"></div><button class="btn btn-secondary" onclick="document.getElementById('modal-history').classList.add('hidden')">CLOSE</button></div>
     </div>
 
-    <!-- CUSTOM WRONG CODE ERROR MODAL -->
     <div id="modal-wrong-code" class="modal hidden">
-        <div class="modal-content">
-            <button class="error-x-btn" onclick="document.getElementById('modal-wrong-code').classList.add('hidden')">❌</button>
-            <h2 style="color: #e74c3c; margin: 0;">INVALID WITHDRAWAL CODE</h2>
-            <p style="margin-top: 10px;">The code you entered is invalid or has expired. Please buy a new withdrawal code.</p>
-        </div>
+        <div class="modal-content"><button class="error-x-btn" onclick="document.getElementById('modal-wrong-code').classList.add('hidden')">❌</button><h2 style="color: #e74c3c;">INVALID CODE</h2><p>Code invalid or expired.</p></div>
     </div>
 
-    <!-- 4. WITHDRAWAL PAGE -->
     <div id="page-withdraw" class="page">
-        <h1>APEXPAY WALLET</h1>
-        <div class="dollar-symbol" style="font-size: 50px;">💲</div>
-        <h3>Withdraw Funds</h3>
-        
-        <input type="text" id="with-name" placeholder="Account Name" readonly>
-        <input type="tel" id="with-acct-num" placeholder="Account Number (10 digits)" maxlength="10" readonly>
-        
-        <select id="with-bank">
-            <option value="">Select Bank</option>
-            <option>Access Bank</option>
-            <option>Citibank Nigeria</option>
-            <option>Ecobank Nigeria</option>
-            <option>Fidelity Bank</option>
-            <option>First Bank of Nigeria</option>
-            <option>First City Monument Bank (FCMB)</option>
-            <option>Guaranty Trust Bank (GTB)</option>
-            <option>Heritage Bank</option>
-            <option>Keystone Bank</option>
-            <option>Polaris Bank</option>
-            <option>Providus Bank</option>
-            <option>Stanbic IBTC Bank</option>
-            <option>Standard Chartered Bank</option>
-            <option>Sterling Bank</option>
-            <option>Union Bank of Nigeria</option>
-            <option>United Bank for Africa (UBA)</option>
-            <option>Unity Bank</option>
-            <option>Wema Bank</option>
-            <option>Zenith Bank</option>
-            <option>Opay</option>
-            <option>Palmpay</option>
-            <option>Moniepoint</option>
-        </select>
-
-        <input type="number" id="with-amount" placeholder="Input amount to withdraw" oninput="validateWithdrawalForm()">
-        <p id="amount-error" style="color: #e74c3c; display: none; font-size: 14px;">Amount exceeds your mining balance!</p>
-        
+        <h1>WITHDRAW</h1><input type="text" id="with-name" readonly><input type="tel" id="with-acct-num" readonly>
+        <select id="with-bank"><option value="">Select Bank</option><option>Opay</option><option>Palmpay</option><option>Moniepoint</option><option>UBA</option><option>GTB</option></select>
+        <input type="number" id="with-amount" placeholder="Amount" oninput="validateWithdrawalForm()">
+        <p id="amount-error" style="color: #e74c3c; display: none;">Exceeds balance!</p>
         <button class="btn" id="btn-proceed-withdraw" disabled onclick="navigate('page-confirm-withdraw')">PROCEED</button>
         <button class="btn btn-secondary" onclick="navigate('page-dashboard')">Back</button>
     </div>
 
-    <!-- 5. CONFIRM WITHDRAWAL -->
     <div id="page-confirm-withdraw" class="page">
-        <h2>Confirm Withdrawal</h2>
-        <p style="font-size: 18px;">Are you sure you want to withdraw <strong style="color: #2ecc71;">96,000</strong> NGN?</p>
-        <button class="btn" onclick="navigate('page-pin')">YES I CONFIRM</button>
-        <button class="btn btn-danger" onclick="navigate('page-dashboard')">REJECT</button>
+        <h2>Confirm</h2><p>Withdraw <strong style="color: #2ecc71;">96,000</strong> NGN?</p>
+        <button class="btn" onclick="navigate('page-pin')">YES</button><button class="btn btn-danger" onclick="navigate('page-dashboard')">REJECT</button>
     </div>
 
-    <!-- 6. PIN / WITHDRAWAL CODE PAGE -->
     <div id="page-pin" class="page">
-        <h2>Enter Withdrawal Code</h2>
-        <p>Please enter your 6-digit withdrawal code</p>
-        <div class="pin-display" id="pin-display">_ _ _ _ _ _</div>
-        
+        <h2>Withdrawal Code</h2><div class="pin-display" id="pin-display">_ _ _ _ _ _</div>
         <div class="keypad">
-            <div class="key" onclick="pressKey('1')">1</div>
-            <div class="key" onclick="pressKey('2')">2</div>
-            <div class="key" onclick="pressKey('3')">3</div>
-            <div class="key" onclick="pressKey('4')">4</div>
-            <div class="key" onclick="pressKey('5')">5</div>
-            <div class="key" onclick="pressKey('6')">6</div>
-            <div class="key" onclick="pressKey('7')">7</div>
-            <div class="key" onclick="pressKey('8')">8</div>
-            <div class="key" onclick="pressKey('9')">9</div>
-            <div class="key" onclick="pressKey('C')" style="background:#e74c3c; color:white;">C</div>
-            <div class="key" onclick="pressKey('0')">0</div>
-            <div class="key" onclick="submitPin()" style="background:#2ecc71; color:white;">✔</div>
+            <div class="key" onclick="pressKey('1')">1</div><div class="key" onclick="pressKey('2')">2</div><div class="key" onclick="pressKey('3')">3</div>
+            <div class="key" onclick="pressKey('4')">4</div><div class="key" onclick="pressKey('5')">5</div><div class="key" onclick="pressKey('6')">6</div>
+            <div class="key" onclick="pressKey('7')">7</div><div class="key" onclick="pressKey('8')">8</div><div class="key" onclick="pressKey('9')">9</div>
+            <div class="key" onclick="pressKey('C')" style="background:#e74c3c;">C</div><div class="key" onclick="pressKey('0')">0</div><div class="key" onclick="submitPin()" style="background:#2ecc71;">✔</div>
         </div>
-        
-        <button class="btn" onclick="navigate('page-buy-code-1')">BUY CODE</button>
-        <button class="btn btn-secondary" onclick="navigate('page-dashboard')">Cancel</button>
+        <button class="btn" onclick="navigate('page-buy-code-1')">BUY CODE</button><button class="btn btn-secondary" onclick="navigate('page-dashboard')">Cancel</button>
     </div>
 
-    <!-- 7. BUY CODE PAGE 1 -->
     <div id="page-buy-code-1" class="page">
-        <h2>Buy Withdrawal Code</h2>
-        <p>In order to get the withdrawal code a fixed amount of <strong style="color: #f39c12;">₦<span id="display-code-price">6,250</span></strong> should be deposited into the account below.</p>
-        <p>Input account details you want to use to make the transaction:</p>
-        
+        <h2>Buy Code</h2><p>Fee: <strong style="color: #f39c12;">₦<span id="display-code-price">6,250</span></strong></p>
         <input type="text" id="sender-name" placeholder="Your Account Name" oninput="validateBuyCodeStep1()">
         <input type="tel" id="sender-acct" placeholder="Your Account Number (10 digits)" maxlength="10" oninput="validateBuyCodeStep1()">
-        <select id="sender-bank" onchange="validateBuyCodeStep1()">
-            <option value="">Select Your Bank</option>
-            <option>Access Bank</option>
-            <option>First Bank</option>
-            <option>GTBank</option>
-            <option>Moniepoint</option>
-            <option>Opay</option>
-            <option>Palmpay</option>
-            <option>UBA</option>
-            <option>Zenith Bank</option>
-            <option>Other</option>
-        </select>
-        
+        <select id="sender-bank" onchange="validateBuyCodeStep1()"><option value="">Select Bank</option><option>Opay</option><option>Other</option></select>
         <button class="btn" id="btn-buy-step1" disabled onclick="navigate('page-buy-code-2')">PROCEED</button>
-        <button class="btn btn-secondary" onclick="navigate('page-pin')">Back</button>
     </div>
 
-        <!-- 8. BUY CODE PAGE 2 -->
     <div id="page-buy-code-2" class="page">
-        <h2>Make Payment</h2>
-        <p>Please transfer exactly <strong style="color: #f39c12;">₦<span id="display-code-price2">6,250</span></strong> to the account below:</p>
-        
-        <div style="background: #161b22; padding: 18px; border-radius: 10px; border: 1px dashed #f39c12; margin: 15px auto; max-width: 400px; text-align: left;">
-            <p style="margin: 5px 0;"><strong>Bank:</strong> <span id="admin-bank-display">Opay</span></p>
-            <p style="margin: 5px 0;"><strong>Account Name:</strong> <span id="admin-name-display">ApexPay Admin</span> <button onclick="copyText('admin-name-display')" style="float:right; padding:2px 8px;">Copy</button></p>
-            <p style="margin: 5px 0;"><strong>Account Number:</strong> <span id="admin-acct-display">8012345678</span> <button onclick="copyText('admin-acct-display')" style="float:right; padding:2px 8px;">Copy</button></p>
-        </div>
-
-        <p>Upload Payment Receipt:</p>
+        <h2>Make Payment</h2><p>Pay exactly <strong style="color: #f39c12;">₦<span id="display-code-price2">6,250</span></strong> to:</p>
+        <div class="text-container"><p>Bank: <span id="admin-bank-display">Opay</span></p><p>Name: <span id="admin-name-display">Admin</span></p><p>Acct: <span id="admin-acct-display">8012345678</span></p></div>
         <input type="file" id="receipt-upload" accept="image/*" onchange="checkFile()">
-        
         <button class="btn" id="btn-paid" disabled onclick="submitPayment()">I'VE PAID</button>
-        <button class="btn btn-secondary" onclick="navigate('page-dashboard')">Cancel</button>
     </div>
 
-    <!-- 9. ADMIN PANEL -->
     <div id="page-admin" class="page">
-        <h1 style="color: #e74c3c;">👑 Admin Dashboard</h1>
-        
-        <div style="background: #161b22; padding: 18px; border-radius: 10px; border: 1px solid #e74c3c; margin: 15px auto; max-width: 400px; text-align: left;">
-            <h3>Fix Withdrawal Code Amount & Bank</h3>
-            <label>Withdrawal Code Amount (₦):</label>
-            <input type="number" id="set-code-price" value="6250">
-            
-            <label>Admin Bank Name:</label>
-            <input type="text" id="set-admin-bank" value="Opay">
-            
-            <label>Admin Account Name:</label>
-            <input type="text" id="set-admin-name" value="ApexPay Business Account">
-            
-            <label>Admin Account Number:</label>
-            <input type="text" id="set-admin-acct" value="8012345678">
-            
-            <button class="btn" onclick="saveAdminSettings()">Save Settings</button>
-        </div>
-
-        <div style="background: #161b22; padding: 18px; border-radius: 10px; border: 1px solid #e74c3c; margin: 15px auto; max-width: 400px; text-align: left;">
-            <h3>Add Other User as Admin</h3>
-            <p style="font-size: 13px;">Input user's phone number to grant admin status:</p>
-            <input type="tel" id="new-admin-phone" placeholder="User Phone Number (11 digits)" maxlength="11">
-            <button class="btn" onclick="addOtherUserAsAdmin()">Grant Admin Access</button>
-        </div>
-
-        <div style="background: #161b22; padding: 18px; border-radius: 10px; border: 1px solid #e74c3c; margin: 15px auto; max-width: 400px; text-align: left;">
-            <h3>Pending Payment Receipts</h3>
-            <p id="pending-list">No pending payments.</p>
-            <button class="btn" style="display:none;" id="btn-approve" onclick="approvePayment()">Approve Payment & Issue Code</button>
-        </div>
-
-        <button class="btn btn-secondary" onclick="navigate('page-dashboard')">Exit Admin Panel</button>
+        <h1 style="color: #e74c3c;">Admin Panel</h1>
+        <div class="text-container"><label>Price (₦):</label><input type="number" id="set-code-price" value="6250"><button class="btn" onclick="saveAdminSettings()">Save</button></div>
+        <div class="text-container"><h3>Pending Payments</h3><p id="pending-list">None.</p><button class="btn" style="display:none;" id="btn-approve" onclick="approvePayment()">Approve & Generate Code</button></div>
+        <button class="btn btn-secondary" onclick="navigate('page-dashboard')">Exit</button>
     </div>
 
-    <!-- 10. LEARN MORE PAGE -->
-    <div id="page-learn-more" class="page">
-        <h2>LEARN MORE</h2>
-        <div class="text-container">
-            <h3 style="text-align: center; color: #f39c12;">ALL YOU NEED TO KNOW ABOUT APEXPAY WALLET</h3>
-            <p><strong>APEXPAY Wallet – Overview</strong><br>
-            APEXPAY Wallet is a digital earning and wallet platform designed to give users a simple way to participate in daily earning activities, manage their balances, and request withdrawals to supported Nigerian bank accounts.</p>
-            
-            <h4>⚙️ How the App Works</h4>
-            <p>
-                <strong>👤 Registration:</strong> Create your account using your name, phone number, and required bank details.<br>
-                <strong>⛏️ Mining:</strong> Click the Mine button daily to activate your earning session.<br>
-                <strong>💰 Earnings:</strong> Earn according to the current mining rate and the conditions available on APEXPAY.<br>
-                <strong>🚀 Miner Upgrade:</strong> Upgrade your miner where available to unlock the earning features associated with the selected level.<br>
-                <strong>🏦 Withdrawals:</strong> Request payment directly to your supported Nigerian bank account when you meet the applicable withdrawal requirements.
-            </p>
-
-            <h4>⭐ Key Benefits</h4>
-            <p>
-                💚 Daily earning opportunities<br>
-                ⚡ Convenient withdrawals<br>
-                📈 Flexible earning levels<br>
-                😊 Beginner-friendly interface<br>
-                🛡️ Secure account management<br>
-                💼 Easy-to-use digital wallet
-            </p>
-
-            <h4>📱 How to Use APEXPAY WALLET</h4>
-            <p>
-                Step 1: Create your APEXPAY account.<br>
-                Step 2: Click Mine to start your daily earning session.<br>
-                Step 3: Monitor your earnings from your wallet dashboard.<br>
-                Step 4: Go to Withdraw when eligible and request your payment.<br>
-                Step 5: Upgrade your miner to access the earning features available at that level.
-            </p>
-
-            <div style="text-align: center; margin-top: 20px;">
-                <h3 style="color: #2ecc71; margin-bottom: 5px;">💚 APEXPAY WALLET</h3>
-                <p style="font-weight: bold; color: #f39c12;">Mine. Earn. Withdraw. Grow.</p>
-            </div>
-        </div>
-        <br>
-        <button class="btn btn-secondary" onclick="navigate('page-dashboard')">Back to Dashboard</button>
-    </div>
-
-    <!-- ACCESS MORE MINES PAGE -->
-    <div id="page-more-mines" class="page">
-        <h2>ACCESS MORE MINES</h2>
-        <div class="dollar-symbol">⛏️</div>
-        <p>Upgrade your account level to increase your daily withdrawal capacity.</p>
-        <button class="btn" onclick="showAdminContactAlert()">Contact Admin to Upgrade</button>
-        <button class="btn btn-secondary" onclick="navigate('page-dashboard')">Back to Dashboard</button>
-    </div>
-
-
-    <script>
-        // Global User DB Simulation
-        let currentUser = {
-            phone: '',
-            name: '',
-            acctNum: '',
-            balance: 0,
-            hasMined: false,
-            isAdmin: false,
-            totalMined: 0,
-            totalWithdrawn: 0,
-            history: []
-        };
-        
-        let systemSettings = {
-            codePrice: 6250,
-            adminBank: 'Opay',
-            adminName: 'ApexPay Business Account',
-            adminAcct: '8012345678',
-            validCode: null
-        };
-
+    <div id="page-learn-more" class="page"><h2>LEARN MORE</h2><p>APEXPAY Wallet helps you earn easily.</p><button class="btn btn-secondary" onclick="navigate('page-dashboard')">Back</button></div>
+    <div id="page-more-mines" class="page"><h2>MORE MINES</h2><button class="btn" onclick="showAdminContactAlert()">Contact Admin</button><button class="btn btn-secondary" onclick="navigate('page-dashboard')">Back</button></div>
+                <script>
+        let currentUser = { phone: '', name: '', acctNum: '', balance: 0, hasMined: false, isAdmin: false, totalMined: 0, totalWithdrawn: 0, history: [] };
+        let systemSettings = { codePrice: 6250, adminBank: 'Opay', adminName: 'ApexPay Business Account', adminAcct: '8012345678', validCode: null };
         let currentPin = "";
 
-        // On Page Load
         window.onload = () => {
             const savedSettings = localStorage.getItem('apex_settings');
             if (savedSettings) systemSettings = JSON.parse(savedSettings);
-
             const savedUser = localStorage.getItem('apex_user');
             if (savedUser) {
                 currentUser = JSON.parse(savedUser);
                 updateDashboardUI();
                 navigate('page-dashboard');
-            } else {
-                navigate('page-home');
-            }
+            } else { navigate('page-home'); }
             startLiveToasts();
         };
 
-        // Page Navigation
         function navigate(pageId) {
             document.querySelectorAll('.page').forEach(page => page.classList.remove('active-page'));
             document.getElementById(pageId).classList.add('active-page');
             window.scrollTo(0,0);
         }
 
-                        // Registration Logic
         function registerUser() {
+            console.log("Register Button Clicked!");
             const phone = document.getElementById('reg-phone').value.trim();
             const name = document.getElementById('reg-name').value.trim();
             const acct = document.getElementById('reg-acct-num').value.trim();
 
-            if (phone.length !== 11) {
-                alert("Error: Phone number MUST be exactly 11 digits. You entered " + phone.length);
-                return;
-            }
-            if (name.length < 2) {
-                alert("Error: Please enter a valid account name.");
-                return;
-            }
-            if (acct.length !== 10) {
-                alert("Error: Account number MUST be exactly 10 digits. You entered " + acct.length);
-                return;
-            }
+            if (phone.length !== 11) { alert("Error: Phone number MUST be exactly 11 digits."); return; }
+            if (name.length < 2) { alert("Error: Enter a valid name."); return; }
+            if (acct.length !== 10) { alert("Error: Account number MUST be exactly 10 digits."); return; }
 
-            currentUser.phone = phone;
-            currentUser.name = name;
-            currentUser.acctNum = acct;
-            currentUser.balance = 0;
+            currentUser.phone = phone; currentUser.name = name; currentUser.acctNum = acct; currentUser.balance = 0;
+            if (!localStorage.getItem('apex_has_admin')) { currentUser.isAdmin = true; localStorage.setItem('apex_has_admin', 'true'); }
             
-            // First user becomes Admin
-            if (!localStorage.getItem('apex_has_admin')) {
-                currentUser.isAdmin = true;
-                localStorage.setItem('apex_has_admin', 'true');
-            }
-
-            saveUser();
-            updateDashboardUI();
-            navigate('page-dashboard');
+            saveUser(); updateDashboardUI(); navigate('page-dashboard');
         }
 
-        // Login Logic
         function loginUser() {
+            console.log("Login Button Clicked!");
             const phone = document.getElementById('login-phone').value.trim();
-            if (phone.length !== 11) {
-                alert("Error: Phone number MUST be exactly 11 digits. You entered " + phone.length);
-                return;
-            }
+            if (phone.length !== 11) { alert("Error: Phone number MUST be exactly 11 digits."); return; }
 
             const savedUser = localStorage.getItem('apex_user');
             if (savedUser) {
                 const parsedUser = JSON.parse(savedUser);
                 if (parsedUser.phone === phone) {
-                    currentUser = parsedUser;
-                    updateDashboardUI();
-                    navigate('page-dashboard');
-                    return;
+                    currentUser = parsedUser; updateDashboardUI(); navigate('page-dashboard'); return;
                 }
             }
-            
-            // If new phone entered via sign-in
-            currentUser.phone = phone;
-            currentUser.name = "User " + phone.substring(7);
-            currentUser.acctNum = "00" + phone.substring(3);
-            currentUser.balance = 0;
-            saveUser();
-            updateDashboardUI();
-            navigate('page-dashboard');
+            currentUser.phone = phone; currentUser.name = "User"; currentUser.acctNum = "0000000000"; currentUser.balance = 0;
+            saveUser(); updateDashboardUI(); navigate('page-dashboard');
         }
 
-
-
         function logoutUser() {
-            if (confirm("Are you sure you want to logout?")) {
-                localStorage.removeItem('apex_user');
-                navigate('page-home');
-            }
+            if (confirm("Logout?")) { localStorage.removeItem('apex_user'); navigate('page-home'); }
         }
 
         function saveUser() {
@@ -725,234 +261,94 @@
             document.getElementById('dash-balance').innerText = currentUser.balance.toLocaleString('en-US', {minimumFractionDigits: 2});
             document.getElementById('dash-name').innerText = currentUser.name;
             document.getElementById('dash-acct').innerText = currentUser.acctNum;
-            
-            if (currentUser.isAdmin) {
-                document.getElementById('admin-nav-btn').classList.remove('hidden');
-            } else {
-                document.getElementById('admin-nav-btn').classList.add('hidden');
-            }
-
+            document.getElementById('admin-nav-btn').classList.toggle('hidden', !currentUser.isAdmin);
             document.getElementById('with-name').value = currentUser.name;
             document.getElementById('with-acct-num').value = currentUser.acctNum;
             
-            const formattedPrice = Number(systemSettings.codePrice).toLocaleString();
-            document.getElementById('display-code-price').innerText = formattedPrice;
-            document.getElementById('display-code-price2').innerText = formattedPrice;
-            document.getElementById('admin-bank-display').innerText = systemSettings.adminBank;
-            document.getElementById('admin-name-display').innerText = systemSettings.adminName;
-            document.getElementById('admin-acct-display').innerText = systemSettings.adminAcct;
-
-            document.getElementById('hist-mined').innerText = currentUser.totalMined.toLocaleString('en-US', {minimumFractionDigits: 2});
-            document.getElementById('hist-withdrawn').innerText = currentUser.totalWithdrawn.toLocaleString('en-US', {minimumFractionDigits: 2});
-            
-            const logsBox = document.getElementById('history-logs');
-            if (currentUser.history.length > 0) {
-                logsBox.innerHTML = currentUser.history.map(item => `<p>• ${item}</p>`).join('');
-            } else {
-                logsBox.innerHTML = '<p style="color: #94a3b8;">No transactions yet.</p>';
+            if(localStorage.getItem('pending_payment') === 'true' && currentUser.isAdmin) {
+                document.getElementById('pending-list').innerText = "1 Pending Payment from User";
+                document.getElementById('btn-approve').style.display = 'block';
             }
         }
 
-        // Live Dynamic Activity Toasts
         function startLiveToasts() {
-            const activities = [
-                "Emeka K. just bought a withdrawal code",
-                "Blessing O. withdrew ₦96,000 to GTBank",
-                "Yusuf M. just bought a withdrawal code",
-                "Chioma A. withdrew ₦96,000 to Opay",
-                "Adebayo T. mined ₦96,000 successfully",
-                "David I. just bought a withdrawal code"
-            ];
-            
+            const activities = ["Someone bought a withdrawal code", "A user withdrew ₦96,000", "A user mined ₦96,000"];
             setInterval(() => {
                 const toast = document.getElementById('toast');
-                const randomMsg = activities[Math.floor(Math.random() * activities.length)];
-                document.getElementById('toast-text').innerText = randomMsg;
+                document.getElementById('toast-text').innerText = activities[Math.floor(Math.random() * activities.length)];
                 toast.classList.remove('hidden');
-                
-                setTimeout(() => {
-                    toast.classList.add('hidden');
-                }, 4000);
-            }, 9000);
+                setTimeout(() => toast.classList.add('hidden'), 3000);
+            }, 10000);
         }
 
-        // Mining Process & 5-Second Countdown
         function startMiningProcess() {
-            if (currentUser.hasMined || currentUser.balance >= 96000) {
-                document.getElementById('modal-limit').classList.remove('hidden');
-                return;
-            }
-
+            if (currentUser.hasMined || currentUser.balance >= 96000) { document.getElementById('modal-limit').classList.remove('hidden'); return; }
             document.getElementById('modal-mining').classList.remove('hidden');
             document.getElementById('mining-spinner-box').classList.remove('hidden');
             document.getElementById('mining-success-box').classList.add('hidden');
-            
-            let count = 5;
-            document.getElementById('countdown-timer').innerText = count;
-
+            let count = 5; document.getElementById('countdown-timer').innerText = count;
             const timer = setInterval(() => {
-                count--;
-                document.getElementById('countdown-timer').innerText = count;
+                count--; document.getElementById('countdown-timer').innerText = count;
                 if (count <= 0) {
                     clearInterval(timer);
                     document.getElementById('mining-spinner-box').classList.add('hidden');
                     document.getElementById('mining-success-box').classList.remove('hidden');
-                    triggerFlowerAnimation();
-
-                    currentUser.balance += 96000;
-                    currentUser.totalMined += 96000;
-                    currentUser.hasMined = true;
-                    currentUser.history.unshift(`Mined +₦96,000 on ${new Date().toLocaleTimeString()}`);
-                    saveUser();
-                    updateDashboardUI();
+                    currentUser.balance += 96000; currentUser.hasMined = true; saveUser(); updateDashboardUI();
                 }
             }, 1000);
         }
 
-        function triggerFlowerAnimation() {
-            const flowerEmojis = ['🌸', '🌺', '💐', '🎉', '✨', '🍀'];
-            for(let i = 0; i < 25; i++) {
-                const flower = document.createElement('div');
-                flower.className = 'flower';
-                flower.innerText = flowerEmojis[Math.floor(Math.random() * flowerEmojis.length)];
-                flower.style.left = Math.random() * 100 + 'vw';
-                flower.style.animationDuration = (2 + Math.random() * 2) + 's';
-                document.body.appendChild(flower);
-                setTimeout(() => flower.remove(), 4000);
-            }
-        }
-
-        function closeMiningModal() {
-            document.getElementById('modal-mining').classList.add('hidden');
-        }
-
-        function showAdminContactAlert() {
-            alert("To upgrade your miner and mine more, please contact the Admin.");
-        }
-
-        function openHistoryModal() {
-            document.getElementById('modal-history').classList.remove('hidden');
-        }
+        function closeMiningModal() { document.getElementById('modal-mining').classList.add('hidden'); }
+        function showAdminContactAlert() { alert("Contact Admin to Upgrade."); }
+        function openHistoryModal() { document.getElementById('modal-history').classList.remove('hidden'); }
 
         function validateWithdrawalForm() {
             const amountInput = parseFloat(document.getElementById('with-amount').value);
             const btn = document.getElementById('btn-proceed-withdraw');
             const error = document.getElementById('amount-error');
-
-            if (!amountInput || amountInput <= 0) {
-                btn.disabled = true;
-                error.style.display = 'none';
-            } else if (amountInput > currentUser.balance) {
-                error.style.display = 'block';
-                btn.disabled = true;
-            } else {
-                error.style.display = 'none';
-                btn.disabled = false;
-            }
+            if (!amountInput || amountInput <= 0) { btn.disabled = true; error.style.display = 'none'; }
+            else if (amountInput > currentUser.balance) { error.style.display = 'block'; btn.disabled = true; }
+            else { error.style.display = 'none'; btn.disabled = false; }
         }
 
-                // Keypad Logic
         function pressKey(key) {
-            if (key === 'C') {
-                currentPin = "";
-            } else if (currentPin.length < 6) {
-                currentPin += key;
-            }
-            
-            let display = currentPin.split('').join(' ');
-            let blanks = Array(6 - currentPin.length).fill('_').join(' ');
-            document.getElementById('pin-display').innerText = (display + " " + blanks).trim();
+            if (key === 'C') { currentPin = ""; } else if (currentPin.length < 6) { currentPin += key; }
+            document.getElementById('pin-display').innerText = currentPin.split('').join(' ') + Array(6 - currentPin.length).fill('_').join(' ').padStart(6 - currentPin.length, ' ');
         }
 
         function submitPin() {
-            if (currentPin.length !== 6) {
-                alert("Please enter a 6-digit code.");
-                return;
-            }
-
+            if (currentPin.length !== 6) { alert("Enter a 6-digit code."); return; }
             const validCode = systemSettings.validCode || "123456";
-
             if (currentPin === validCode) {
-                const withdrawAmt = parseFloat(document.getElementById('with-amount').value) || 96000;
-                currentUser.balance -= withdrawAmt;
-                currentUser.totalWithdrawn += withdrawAmt;
-                currentUser.history.unshift(`Withdrew -₦${withdrawAmt.toLocaleString()} on ${new Date().toLocaleTimeString()}`);
-                
-                systemSettings.validCode = null; 
-
-                saveUser();
-                updateDashboardUI();
+                currentUser.balance -= parseFloat(document.getElementById('with-amount').value) || 96000;
+                systemSettings.validCode = null; saveUser(); updateDashboardUI();
                 alert("Withdrawal Processed Successfully!");
-                currentPin = "";
-                pressKey('');
-                navigate('page-dashboard');
-            } else {
-                document.getElementById('modal-wrong-code').classList.remove('hidden');
-                currentPin = "";
-                pressKey('');
-            }
+                currentPin = ""; pressKey(''); navigate('page-dashboard');
+            } else { document.getElementById('modal-wrong-code').classList.remove('hidden'); currentPin = ""; pressKey(''); }
         }
 
         function validateBuyCodeStep1() {
-            const name = document.getElementById('sender-name').value.trim();
-            const acct = document.getElementById('sender-acct').value.trim();
-            const bank = document.getElementById('sender-bank').value;
             const btn = document.getElementById('btn-buy-step1');
-
-            if (name.length > 2 && acct.length === 10 && bank !== "") {
-                btn.disabled = false;
-            } else {
-                btn.disabled = true;
-            }
+            btn.disabled = !(document.getElementById('sender-name').value.length > 2 && document.getElementById('sender-acct').value.length === 10 && document.getElementById('sender-bank').value !== "");
         }
 
-        function copyText(elementId) {
-            const text = document.getElementById(elementId).innerText;
-            navigator.clipboard.writeText(text);
-            alert("Copied: " + text);
-        }
-
-        function checkFile() {
-            const fileInput = document.getElementById('receipt-upload');
-            const btnPaid = document.getElementById('btn-paid');
-            btnPaid.disabled = fileInput.files.length === 0;
-        }
+        function checkFile() { document.getElementById('btn-paid').disabled = document.getElementById('receipt-upload').files.length === 0; }
 
         function submitPayment() {
-            alert("Payment receipt submitted! Waiting for Admin approval.");
-            localStorage.setItem('pending_payment', 'true');
-            navigate('page-dashboard');
+            alert("Receipt submitted! Waiting for Admin approval.");
+            localStorage.setItem('pending_payment', 'true'); navigate('page-dashboard');
         }
 
         function saveAdminSettings() {
             systemSettings.codePrice = document.getElementById('set-code-price').value;
-            systemSettings.adminBank = document.getElementById('set-admin-bank').value;
-            systemSettings.adminName = document.getElementById('set-admin-name').value;
-            systemSettings.adminAcct = document.getElementById('set-admin-acct').value;
-            
-            saveUser();
-            updateDashboardUI();
-            alert("Admin settings updated successfully!");
-        }
-
-        function addOtherUserAsAdmin() {
-            const targetPhone = document.getElementById('new-admin-phone').value.trim();
-            if(targetPhone.length !== 11) {
-                alert("Please enter a valid 11-digit phone number.");
-                return;
-            }
-            alert(`User with phone ${targetPhone} has been granted Admin Access!`);
-            document.getElementById('new-admin-phone').value = "";
+            saveUser(); updateDashboardUI(); alert("Settings saved!");
         }
 
         function approvePayment() {
             const generatedCode = Math.floor(100000 + Math.random() * 900000).toString();
-            systemSettings.validCode = generatedCode;
-            localStorage.removeItem('pending_payment');
-            saveUser();
-            alert(`Payment Approved! Generated one-time withdrawal code is: ${generatedCode}`);
-            document.getElementById('pending-list').innerText = "No pending payments.";
-            document.getElementById('btn-approve').style.display = 'none';
+            systemSettings.validCode = generatedCode; localStorage.removeItem('pending_payment'); saveUser();
+            alert(`Payment Approved! Code: ${generatedCode}`);
+            document.getElementById('pending-list').innerText = "None."; document.getElementById('btn-approve').style.display = 'none';
         }
     </script>
 </body>
