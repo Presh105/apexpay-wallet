@@ -62,6 +62,9 @@
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
         .text-container { text-align: left; max-width: 400px; margin: 0 auto 15px auto; background: #161b22; padding: 18px; border-radius: 10px; border: 1px solid #30363d; }
         .code-box { background: #1e293b; border: 2px dashed #2ecc71; padding: 15px; border-radius: 10px; margin: 15px auto; max-width: 400px; font-size: 24px; font-weight: bold; color: #2ecc71; letter-spacing: 4px; }
+        
+        .warning-banner { background: rgba(231, 76, 60, 0.15); border: 1px solid #e74c3c; padding: 12px; margin: 15px auto; border-radius: 8px; max-width: 400px; text-align: left; font-size: 13px; color: #ffcccc; line-height: 1.4; }
+        .warning-banner strong { color: #e74c3c; font-size: 14px; }
     </style>
 </head>
 <body>
@@ -77,6 +80,7 @@
     <!-- PAGE 2: SIGN UP -->
     <div id="page-signup" class="page">
         <h1>APEXPAY WALLET</h1><div class="dollar-symbol" style="font-size: 50px;">💲</div><h3>Create Account</h3>
+        <div class="warning-banner"><strong>⚠️ STRICT WARNING:</strong> Do not log out or attempt to create multiple accounts. Doing so will make your account permanently invalid and you will <strong>NOT</strong> receive your payout.</div>
         <input type="tel" id="reg-phone" placeholder="Phone number (11 digits)" maxlength="11">
         <input type="text" id="reg-name" placeholder="Account name">
         <input type="tel" id="reg-acct-num" placeholder="Account number (10 digits)" maxlength="10">
@@ -87,6 +91,7 @@
     <!-- PAGE 3: SIGN IN -->
     <div id="page-signin" class="page">
         <h1>APEXPAY WALLET</h1><div class="dollar-symbol" style="font-size: 50px;">💲</div><h3>Sign In</h3>
+        <div class="warning-banner"><strong>⚠️ STRICT WARNING:</strong> Do not log out or attempt to create multiple accounts. Doing so will make your account permanently invalid and you will <strong>NOT</strong> receive your payout.</div>
         <input type="tel" id="login-phone" placeholder="Input your 11 digit phone number" maxlength="11">
         <button class="btn" onclick="loginUser()">SIGN IN</button>
         <div class="link" onclick="navigate('page-signup')">Don't have an account? Sign up here</div>
@@ -103,6 +108,8 @@
                 <button class="nav-btn" style="color: #e74c3c;" onclick="logoutUser()">🚪 Logout</button>
             </div>
         </div>
+
+        <div class="warning-banner" style="margin-top: 20px;"><strong>⚠️ IMPORTANT:</strong> Do not log out or create multiple accounts. It will invalidate your account and cancel your payouts.</div>
 
         <!-- Banner showing approved withdrawal code to user if available -->
         <div id="user-code-banner" class="hidden">
@@ -147,7 +154,7 @@
     </div>
 
     <div id="modal-wrong-code" class="modal hidden">
-        <div class="modal-content"><button class="error-x-btn" onclick="document.getElementById('modal-wrong-code').classList.add('hidden')">❌</button><h2 style="color: #e74c3c;">INVALID CODE</h2><p>The code you entered is invalid or expired.</p></div>
+        <div class="modal-content"><button class="error-x-btn" onclick="document.getElementById('modal-wrong-code').classList.add('hidden')">❌</button><h2 style="color: #e74c3c;">INVALID CODE</h2><p>The code you entered is invalid or has already been used.</p></div>
     </div>
 
     <!-- WITHDRAWAL FLOW PAGES -->
@@ -166,7 +173,7 @@
     </div>
 
     <div id="page-pin" class="page">
-        <h2>Enter Code</h2><p style="font-size:12px;">Enter your 6-Digit Withdrawal Code</p>
+        <h2>Enter Code</h2><p style="font-size:12px;">Enter your 6-Digit Withdrawal Code. Codes can only be used <strong>ONCE</strong>.</p>
         <div class="pin-display" id="pin-display">_ _ _ _ _ _</div>
         <div class="keypad">
             <div class="key" onclick="pressKey('1')">1</div><div class="key" onclick="pressKey('2')">2</div><div class="key" onclick="pressKey('3')">3</div>
@@ -268,8 +275,10 @@
             clearTimeout(logoTapTimer);
             if (logoTapCount >= 4) {
                 logoTapCount = 0;
-                const enteredPin = prompt("Enter Secret Admin Passcode:");
-                if (enteredPin === systemSettings.adminPin) {
+                const enteredPin = prompt("Enter Secret Admin Passcode (Default: 9999):");
+                
+                // FIXED PASSCODE LOGIC: Will always accept '9999' or the saved admin pin.
+                if (enteredPin === '9999' || (systemSettings && enteredPin === systemSettings.adminPin)) {
                     navigate('page-admin');
                 } else if (enteredPin !== null) {
                     alert("Incorrect Admin Passcode!");
@@ -336,7 +345,7 @@
         }
 
         function logoutUser() {
-            if (confirm("Are you sure you want to logout?")) { 
+            if (confirm("WARNING: Logging out or changing accounts may result in account invalidation and loss of funds. Are you sure you want to proceed?")) { 
                 localStorage.removeItem('apex_user'); 
                 navigate('page-home'); 
             }
@@ -437,16 +446,18 @@
 
         function submitPin() {
             if (currentPin.length !== 6) { alert("Please enter a 6-digit code."); return; }
-            const validCode = systemSettings.validCode || "123456";
-            if (currentPin === validCode) {
+            
+            // Check if code matches the exact generated valid code and that it isn't null.
+            if (systemSettings.validCode !== null && currentPin === systemSettings.validCode) {
                 const withdrawAmt = parseFloat(document.getElementById('with-amount').value) || 96000;
                 currentUser.balance -= withdrawAmt;
                 currentUser.totalWithdrawn = (currentUser.totalWithdrawn || 0) + withdrawAmt;
                 if(!currentUser.history) currentUser.history = [];
                 currentUser.history.unshift(`Withdrew -₦${withdrawAmt.toLocaleString()} on ${new Date().toLocaleTimeString()}`);
                 
-                // Clear the used code so it disappears from the dashboard
+                // DELETES THE CODE ONCE USED SO IT CANNOT BE REUSED
                 systemSettings.validCode = null; 
+                
                 saveUser(); 
                 updateDashboardUI();
                 
