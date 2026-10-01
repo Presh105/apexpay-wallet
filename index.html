@@ -643,22 +643,22 @@
             window.scrollTo(0,0);
         }
 
-        // Registration Logic
+                        // Registration Logic
         function registerUser() {
             const phone = document.getElementById('reg-phone').value.trim();
             const name = document.getElementById('reg-name').value.trim();
             const acct = document.getElementById('reg-acct-num').value.trim();
 
             if (phone.length !== 11) {
-                alert("Please enter a valid 11-digit phone number.");
+                alert("Error: Phone number MUST be exactly 11 digits. You entered " + phone.length);
                 return;
             }
             if (name.length < 2) {
-                alert("Please enter a valid account name.");
+                alert("Error: Please enter a valid account name.");
                 return;
             }
             if (acct.length !== 10) {
-                alert("Please enter a valid 10-digit account number.");
+                alert("Error: Account number MUST be exactly 10 digits. You entered " + acct.length);
                 return;
             }
 
@@ -682,7 +682,7 @@
         function loginUser() {
             const phone = document.getElementById('login-phone').value.trim();
             if (phone.length !== 11) {
-                alert("Please enter your 11-digit phone number.");
+                alert("Error: Phone number MUST be exactly 11 digits. You entered " + phone.length);
                 return;
             }
 
@@ -706,6 +706,8 @@
             updateDashboardUI();
             navigate('page-dashboard');
         }
+
+
 
         function logoutUser() {
             if (confirm("Are you sure you want to logout?")) {
